@@ -2,18 +2,27 @@
  * Created by oztiryakimeric on 9.12.2017.
  */
 public abstract class Cell {
-    private int index;
+    int index;
 
     public Cell(int index) {
         this.index = index;
     }
 }
 
-class GameCell{
+class GameCell extends Cell{
     private Symbol symbol;
 
-    public GameCell(Symbol symbol) {
+    public GameCell(int index, Symbol symbol) {
+        super(index);
         this.symbol = symbol;
+    }
+
+    public Symbol getSymbol(){
+        return symbol;
+    }
+
+    public int getIndex(){
+        return index;
     }
 }
 
@@ -32,7 +41,15 @@ class BeginCell extends Cell{
 }
 
 class BoatCell extends Cell{
-    public BoatCell() {
+    private static BoatCell instance;
+
+    public static BoatCell newInstance(){
+        if(instance == null)
+            instance = new BoatCell();
+        return instance;
+    }
+
+    private BoatCell() {
         super(37);
     }
 }

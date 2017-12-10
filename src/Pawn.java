@@ -5,8 +5,18 @@ import java.awt.*;
  */
 public class Pawn {
     private Cell cell;
+    private int index;
 
     public Pawn() {
+        index = 0;
         this.cell = BeginCell.newInstance();
+    }
+
+    public int getIndex(){
+        return index;
+    }
+
+    void setIndex(int index){
+        this.index = index;
     }
 }

@@ -1,28 +1,32 @@
 /**
  * Created by oztiryakimeric on 9.12.2017.
  */
-public abstract class Cell {
+public class Cell{
     private int index;
-    private Symbol symbol;
 
-    public Cell(int index, Symbol symbol) {
+    public Cell(int index) {
         this.index = index;
-        this.symbol = symbol;
     }
 
-    public Symbol getSymbol(){
-        return symbol;
-    }
-
-    public int getIndex(){
+    public int getIndex() {
         return index;
     }
 }
 
 class GameCell extends Cell{
+    private Segment segment;
+    private Symbol symbol;
 
-    public GameCell(int index, Symbol symbol) {
-        super(index, symbol);
+    //celler segmenti ve o segmentteki indexini tutsun dedim, aramak daha kolay oldu. ayrıca olustururken 6 yla carp vs
+    //ondan kurtulduk. pawn a da boyle bisey yapılabilir.
+    public GameCell(Segment segment, int index, Symbol symbol) {
+        super(index);
+        this.segment = segment;
+        this.symbol = symbol;
+    }
+
+    public Symbol getSymbol() {
+        return symbol;
     }
 }
 
@@ -36,7 +40,7 @@ class BeginCell extends Cell{
     }
 
     private BeginCell() {
-        super(0, Symbol.BEGIN);
+        super(0);
     }
 }
 
@@ -50,6 +54,6 @@ class BoatCell extends Cell{
     }
 
     private BoatCell() {
-        super(37, Symbol.BOAT);
+        super(38);
     }
 }

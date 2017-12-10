@@ -8,25 +8,27 @@ import java.util.Random;
  * Created by oztiryakimeric on 9.12.2017.
  */
 public class Segment {
-    private ArrayList<Cell> cellList;
-    private int length;
+    private GameCell[] cellArray;
     private int index;
 
     public Segment(int index, int length) {
         this.index = index;
-        this.length = length;
-        cellList = new ArrayList<>();
+        cellArray = new GameCell[length];
         initCells();
     }
 
     private void initCells(){
         List<Symbol> shuffledSymbols = Symbol.generateRandomSymbolSet();
 
-        for(int i = 0; i < length; i++)
-            cellList.add(new GameCell(((index * 6) + i + 1),shuffledSymbols.get(i)));
+        for(int i = 0; i < cellArray.length; i++)
+            cellArray[i] = new GameCell(this, i, shuffledSymbols.get(i));
+
     }
 
-    public ArrayList<Cell> getCellList(){
-        return cellList;
+    public GameCell findCell(Symbol symbol){
+        for(int i=0; i<cellArray.length; i++)
+            if(cellArray[i].getSymbol().equals(symbol))
+                return cellArray[i];
+        return null;
     }
 }

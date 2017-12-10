@@ -57,6 +57,12 @@ public class Game {
     }
 
     private void playRound(Pawn pawn, Symbol symbol){
+        //burayı alt classlara tasıdım
+        //burada board classına bu pawn ve sembol ıcın mumkun bi cell ver diyorum.
+        Cell destinationCell = board.getPossibleCell(pawn, symbol);
+        pawn.move(destinationCell);
+
+        /*
         int pawnIndex = pawn.getIndex();
         int pawnSegment = pawnIndex / 6;
         int pawnIndexOfSegment = pawnIndex % 6;
@@ -74,7 +80,7 @@ public class Game {
 
         if(!symbolFound){
             currentPlayer().moveBoat(pawn);
-        }
+        }*/
     }
 
     public Player currentPlayer(){
@@ -87,8 +93,7 @@ public class Game {
     }
 
     public boolean isFinished() {
-        //bu kısmı playera tasıdım. Pawn ın boat dite arraylist e gerek kalmadı
-        return currentPlayer.isWinner();
+        return !currentPlayer.isWinner();
     }
 
     public LinkedList<Player> getPlayers() {

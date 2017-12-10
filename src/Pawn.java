@@ -10,6 +10,10 @@ public class Pawn {
         index = 0;
     }
 
+    public void move(Cell cell){
+        index = cell.getIndex();
+    }
+
     public int getIndex(){
         return index;
     }

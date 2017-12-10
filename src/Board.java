@@ -6,15 +6,8 @@ import java.util.ArrayList;
 public class Board {
     private Segment[] segmentArray;
     private static Board instance;
-    //private ArrayList<Cell> cellList;
 
     private Board() {
-        /*cellList = new ArrayList<>();
-        segmentArray = new Segment[6];
-        cellList.add(BeginCell.newInstance());
-        initSegments();
-        cellList.add(BoatCell.newInstance());*/
-
         initSegments();
         segmentArray = new Segment[6];
     }
@@ -29,7 +22,6 @@ public class Board {
         BeginCell.newInstance();
         for(int i = 0; i < segmentArray.length; i++){
             segmentArray[i] = new Segment(i, segmentArray.length);
-            //addCellsToList(segmentArray[i]);
         }
         BoatCell.newInstance();
     }
@@ -38,9 +30,15 @@ public class Board {
         return segmentArray;
     }
 
-    /*private void addCellsToList(Segment segment){
-        for(int i = 0; i < segment.getCellList().size(); i++){
-            cellList.add((Cell) segment.getCellList().get(i));
-        }
-    }*/
+    public Cell getPossibleCell(Pawn pawn, Symbol symbol){
+        int pawnSegment = pawn.getIndex() / 6;
+        //burda segmente bu semboldeki cell ini ver diyoruz.
+        //eger gelen cell null degılse ve pıyonun onundeyse return edıyoruz. yoksa pıyounun bota gıtmesı gerekır
+        //bota gıtmesını soyluyoruz
+        Cell cell = segmentArray[pawnSegment].findCell(symbol);
+        if(cell != null && cell.getIndex() > pawn.getIndex())
+            return cell;
+        else
+            return BoatCell.newInstance();
+    }
 }

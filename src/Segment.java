@@ -26,7 +26,7 @@ public class Segment {
             cellList.add(new GameCell(((index * 6) + i + 1),shuffledSymbols.get(i)));
     }
 
-    public List getCellList(){
+    public ArrayList<Cell> getCellList(){
         return cellList;
     }
 }

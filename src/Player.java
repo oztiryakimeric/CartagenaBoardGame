@@ -41,16 +41,12 @@ public class Player {
             pawnArray[i] = new Pawn();
     }
 
-    private void moveBoat(Pawn pawn){
+    public void moveBoat(Pawn pawn){
         pawnInBoat.add(pawn);
     }
 
-    public void movePawn(Pawn pawn, Symbol symbol){
-
-    }
-
     //gemiye binen korsanları buradan hesaplıcaz. Oyun sonunu belirlemek için kullanılacak.
-    public int getInBoat(){
+    public int getPawnInBoat(){
         return pawnInBoat.size();
     }
 

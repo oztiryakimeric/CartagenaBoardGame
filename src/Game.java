@@ -1,4 +1,3 @@
-import java.awt.*;
 import java.util.LinkedList;
 
 /**
@@ -36,17 +35,47 @@ public class Game {
         }
     }
 
-    //hangi segmentte olduğumuzu bilmediğimiz için segmente göre cell aramak çok kullanışlı değil. Bir çözüm bulmak gerek.
-    //Burası çok eksik çözümü bulamadım
+    /*Segmentle aramaya bir çözüm buldum. Ancak Pawn ve symbol inputlarını nasıl vereceğimizi bir konuşalım.
+      İki tur hakkını oyuncu nasıl kullanacak düşünmekte fayda var.
+      şimdilik move bir şekilde pawn ve karttan gelecek symbolünü alıyor. Ona göre bir move işlemi yapıyor.
+      Ayrıca Symbol yerine Card mı alsa acaba move methodu?
+     */
     public void move(Pawn pawn, Symbol symbol){
+        playRound(pawn, symbol);
+        boolean wantSecondRound = false;
+
+        if(!wantSecondRound){
+            currentPlayer().addCard(deck.getTopCard());
+            currentPlayer().addCard(deck.getTopCard());
+        } else {
+            playRound(pawn, symbol);
+            currentPlayer().addCard(deck.getTopCard());
+        }
+
+        if(!isFinished()) {
+            turnCount++;
+            switchToNextPlayer();
+        }
+    }
+
+    private void playRound(Pawn pawn, Symbol symbol){
         int pawnIndex = pawn.getIndex();
         int pawnSegment = pawnIndex / 6;
         int pawnIndexOfSegment = pawnIndex % 6;
+        boolean symbolFound = false;
 
-        for(int i = pawnSegment; i < 2; i++){
+        for(int i = pawnSegment; i < 6; i++){
             for(int j = pawnIndexOfSegment + 1; j < 6; j++){
-                if()
+                if(board.getSegmentList()[i].getCellList().get(j).getSymbol() == symbol){
+                    pawn.setIndex((i * 6) + j);
+                    symbolFound = true;
+                    break;
+                }
             }
+        }
+
+        if(!symbolFound){
+            currentPlayer().moveBoat(pawn);
         }
     }
 
@@ -62,10 +91,10 @@ public class Game {
         return getWinner() != null;
     }
 
+    //yeni değişimle beraber getWinner methodu her turun sonunda oynayan oyuncu için kontrol yapacak.
     public Player getWinner() {
-        for (Player player: getPlayers()) {
-            if (player.getInBoat() == 6)
-                return player;
+        if(currentPlayer().getPawnInBoat() == 6){
+            return currentPlayer();
         }
         return null;
     }

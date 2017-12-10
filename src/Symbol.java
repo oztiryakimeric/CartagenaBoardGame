@@ -19,4 +19,21 @@ public enum Symbol {
         Collections.shuffle(symbolList);
         return symbolList;
     }
+
+    public static List<Symbol> generateDeckSymbolSet(){
+        List<Symbol> deckSymbols = new ArrayList<>();
+
+        for(int i = 0; i < 30; i++){
+            deckSymbols.add(BOTTLE);
+            deckSymbols.add(KEYS);
+            deckSymbols.add(SWORD);
+            deckSymbols.add(SKULL);
+            deckSymbols.add(HAT);
+            deckSymbols.add(PISTOL);
+        }
+
+        Collections.shuffle(deckSymbols);
+
+        return deckSymbols;
+    }
 }

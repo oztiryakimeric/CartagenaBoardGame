@@ -22,7 +22,7 @@ public class Segment {
     private void initCells(){
         List<Symbol> shuffledSymbols = Symbol.generateRandomSymbolSet();
 
-        for(int i=0; i<length; i++)
+        for(int i = 0; i < length; i++)
             cellList.add(new GameCell(((index * 6) + i + 1),shuffledSymbols.get(i)));
     }
 

@@ -5,26 +5,36 @@ import java.util.ArrayList;
  */
 public class Board {
     private Segment[] segmentArray;
-    private ArrayList<Cell> cellList;
+    private static Board instance;
+    //private ArrayList<Cell> cellList;
 
-    public Board() {
-        cellList = new ArrayList<>();
+    private Board() {
+        /*cellList = new ArrayList<>();
         segmentArray = new Segment[6];
         cellList.add(BeginCell.newInstance());
         initSegments();
-        cellList.add(BoatCell.newInstance());
+        cellList.add(BoatCell.newInstance());*/
+
+        initSegments();
+        segmentArray = new Segment[6];
+    }
+
+    public static Board getInstance(){
+        if(instance == null)
+            instance = new Board();
+        return instance;
     }
 
     private void initSegments(){
         for(int i = 0; i < segmentArray.length; i++){
             segmentArray[i] = new Segment(i, segmentArray.length);
-            addCellsToList(segmentArray[i]);
+            //addCellsToList(segmentArray[i]);
         }
     }
 
-    private void addCellsToList(Segment segment){
+    /*private void addCellsToList(Segment segment){
         for(int i = 0; i < segment.getCellList().size(); i++){
             cellList.add((Cell) segment.getCellList().get(i));
         }
-    }
+    }*/
 }

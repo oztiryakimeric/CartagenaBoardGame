@@ -6,7 +6,7 @@ import java.util.List;
  * Created by oztiryakimeric on 9.12.2017.
  */
 public enum Symbol {
-    BOTTLE, KEYS, SWORD, SKULL, HAT, PISTOL;
+    BOTTLE, KEYS, SWORD, SKULL, HAT, PISTOL, BEGIN, BOAT;
 
     public static List<Symbol> generateRandomSymbolSet(){
         List<Symbol> symbolList = new ArrayList<>();

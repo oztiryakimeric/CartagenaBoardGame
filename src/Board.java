@@ -26,10 +26,16 @@ public class Board {
     }
 
     private void initSegments(){
+        BeginCell.newInstance();
         for(int i = 0; i < segmentArray.length; i++){
             segmentArray[i] = new Segment(i, segmentArray.length);
             //addCellsToList(segmentArray[i]);
         }
+        BoatCell.newInstance();
+    }
+
+    public Segment[] getSegmentList(){
+        return segmentArray;
     }
 
     /*private void addCellsToList(Segment segment){

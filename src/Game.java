@@ -40,8 +40,13 @@ public class Game {
     //Burası çok eksik çözümü bulamadım
     public void move(Pawn pawn, Symbol symbol){
         int pawnIndex = pawn.getIndex();
-        for(int i = pawnIndex; i < pawnIndex + 6; i++){
+        int pawnSegment = pawnIndex / 6;
+        int pawnIndexOfSegment = pawnIndex % 6;
 
+        for(int i = pawnSegment; i < 2; i++){
+            for(int j = pawnIndexOfSegment + 1; j < 6; j++){
+                if()
+            }
         }
     }
 

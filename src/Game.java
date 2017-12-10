@@ -9,12 +9,10 @@ public class Game {
     private Board board;
     private Deck deck;
     private int numPlayers;
-    private int turnCount;
 
     public Game(int numPlayers){
         this.numPlayers = numPlayers;
         board = Board.getInstance();
-        turnCount = 0; //Bu turn count sayesinde kimin sırasının geldiğini öğrenicez
         initDeck();
         initPlayers();
     }
@@ -26,12 +24,13 @@ public class Game {
 
     private void initPlayers(){
         for(int i = 0; i < numPlayers; i++){
-            playerList.add(new Player(i));
+            //burda ufak bi hata vardı, duzelttim.
+            Player p = new Player(i);
 
-            //Deck'ten 6 kart alıp oyunculara ekliyor
-            for(int j = 0; j < 6; j++){
+            for(int j = 0; j < 6; j++)
                 playerList.get(i).addCard(deck.getTopCard());
-            }
+
+            playerList.add(p);
         }
     }
 
@@ -53,7 +52,6 @@ public class Game {
         }
 
         if(!isFinished()) {
-            turnCount++;
             switchToNextPlayer();
         }
     }
@@ -84,19 +82,13 @@ public class Game {
     }
 
     public void switchToNextPlayer(){
-        currentPlayer = playerList.get(turnCount % numPlayers);
+        //turn count'a gerek kalmadan boyle hesaplayabiliriz.
+        currentPlayer = playerList.get((playerList.indexOf(currentPlayer) + 1) % playerList.size());
     }
 
     public boolean isFinished() {
-        return getWinner() != null;
-    }
-
-    //yeni değişimle beraber getWinner methodu her turun sonunda oynayan oyuncu için kontrol yapacak.
-    public Player getWinner() {
-        if(currentPlayer().getPawnInBoat() == 6){
-            return currentPlayer();
-        }
-        return null;
+        //bu kısmı playera tasıdım. Pawn ın boat dite arraylist e gerek kalmadı
+        return currentPlayer.isWinner();
     }
 
     public LinkedList<Player> getPlayers() {

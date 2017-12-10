@@ -8,7 +8,6 @@ public class Player {
     private int id;
     private Color color;
     private Pawn[] pawnArray;
-    private ArrayList<Pawn> pawnInBoat;
     private ArrayList<Card> deck;
 
     public Player(int id) {
@@ -16,7 +15,6 @@ public class Player {
         setColor();
         createPawns(6);
         deck = new ArrayList<>();
-        pawnInBoat = new ArrayList<>();
     }
 
     private void setColor(){
@@ -42,12 +40,15 @@ public class Player {
     }
 
     public void moveBoat(Pawn pawn){
-        pawnInBoat.add(pawn);
+        //pawnInBoat.add(pawn);
     }
 
-    //gemiye binen korsanları buradan hesaplıcaz. Oyun sonunu belirlemek için kullanılacak.
-    public int getPawnInBoat(){
-        return pawnInBoat.size();
+    public boolean isWinner(){
+        int pawnInBoatCount = 0;
+        for(int i=0; i<pawnArray.length; i++)
+            if(pawnArray[i].getIndex() == 38)
+                pawnInBoatCount++;
+        return pawnInBoatCount == 6;
     }
 
     public void addCard(Card card){

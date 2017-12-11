@@ -28,6 +28,11 @@ class GameCell extends Cell{
     public Symbol getSymbol() {
         return symbol;
     }
+
+    @Override
+    public String toString() {
+        return symbol.toString();
+    }
 }
 
 class BeginCell extends Cell{
@@ -42,6 +47,11 @@ class BeginCell extends Cell{
     private BeginCell() {
         super(0);
     }
+
+    @Override
+    public String toString() {
+        return "BEGIN CELL";
+    }
 }
 
 class BoatCell extends Cell{
@@ -55,5 +65,10 @@ class BoatCell extends Cell{
 
     private BoatCell() {
         super(38);
+    }
+
+    @Override
+    public String toString() {
+        return "BOAT";
     }
 }

@@ -3,6 +3,9 @@ import java.awt.*;
 /**
  * Created by oztiryakimeric on 9.12.2017.
  */
+
+//pawn ında segment ve cell tutması kolaylastırıcak baya, boattakileri hesaplaması felan daha sekıl olucak
+//
 public class Pawn {
     private int index;
 

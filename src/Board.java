@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by oztiryakimeric on 9.12.2017.
@@ -8,8 +9,8 @@ public class Board {
     private static Board instance;
 
     private Board() {
-        initSegments();
         segmentArray = new Segment[6];
+        initSegments();
     }
 
     public static Board getInstance(){
@@ -40,5 +41,10 @@ public class Board {
             return cell;
         else
             return BoatCell.newInstance();
+    }
+
+    @Override
+    public String toString() {
+        return "Board : " + BeginCell.newInstance().toString() + Arrays.toString(segmentArray) + BoatCell.newInstance();
     }
 }

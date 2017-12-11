@@ -1,10 +1,12 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by oztiryakimeric on 9.12.2017.
  */
 public class Game {
-    private LinkedList<Player> playerList;
+    private List<Player> playerList;
     private Player currentPlayer;
     private Board board;
     private Deck deck;
@@ -12,6 +14,7 @@ public class Game {
 
     public Game(int numPlayers){
         this.numPlayers = numPlayers;
+        playerList = new ArrayList<>();
         board = Board.getInstance();
         initDeck();
         initPlayers();
@@ -25,12 +28,12 @@ public class Game {
     private void initPlayers(){
         for(int i = 0; i < numPlayers; i++){
             //burda ufak bi hata vardı, duzelttim.
-            Player p = new Player(i);
+            Player player = new Player(i);
 
             for(int j = 0; j < 6; j++)
-                playerList.get(i).addCard(deck.getTopCard());
+                player.addCard(deck.getTopCard());
 
-            playerList.add(p);
+            playerList.add(player);
         }
     }
 
@@ -61,26 +64,6 @@ public class Game {
         //burada board classına bu pawn ve sembol ıcın mumkun bi cell ver diyorum.
         Cell destinationCell = board.getPossibleCell(pawn, symbol);
         pawn.move(destinationCell);
-
-        /*
-        int pawnIndex = pawn.getIndex();
-        int pawnSegment = pawnIndex / 6;
-        int pawnIndexOfSegment = pawnIndex % 6;
-        boolean symbolFound = false;
-
-        for(int i = pawnSegment; i < 6; i++){
-            for(int j = pawnIndexOfSegment + 1; j < 6; j++){
-                if(board.getSegmentList()[i].getCellList().get(j).getSymbol() == symbol){
-                    pawn.setIndex((i * 6) + j);
-                    symbolFound = true;
-                    break;
-                }
-            }
-        }
-
-        if(!symbolFound){
-            currentPlayer().moveBoat(pawn);
-        }*/
     }
 
     public Player currentPlayer(){
@@ -96,7 +79,14 @@ public class Game {
         return !currentPlayer.isWinner();
     }
 
-    public LinkedList<Player> getPlayers() {
+    public List<Player> getPlayers() {
         return playerList;
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "board=" + board +
+                '}';
     }
 }

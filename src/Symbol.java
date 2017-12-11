@@ -36,4 +36,23 @@ public enum Symbol {
 
         return deckSymbols;
     }
+
+    public String toString(){
+        switch (this){
+            case BOTTLE:
+                return "BOTTLE";
+            case KEYS:
+                return "KEYS";
+            case SWORD:
+                return "SWORD";
+            case SKULL:
+                return "SKULL";
+            case HAT:
+                return "HAT";
+            case PISTOL:
+                return "PISTOL";
+            default:
+                return "UNRECOGNIZED";
+        }
+    }
 }

@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by oztiryakimeric on 9.12.2017.
@@ -8,7 +9,7 @@ public class Player {
     private int id;
     private Color color;
     private Pawn[] pawnArray;
-    private ArrayList<Card> deck;
+    private ArrayList<Symbol> deck;
 
     public Player(int id) {
         this.id = id;
@@ -51,11 +52,12 @@ public class Player {
         return pawnInBoatCount == 6;
     }
 
-    public void addCard(Card card){
+    public void addCard(Symbol card){
         deck.add(card);
     }
 
     public Color getColor(){
         return color;
     }
+    
 }

@@ -1,6 +1,7 @@
 import sun.jvm.hotspot.debugger.cdbg.Sym;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -30,5 +31,10 @@ public class Segment {
             if(cellArray[i].getSymbol().equals(symbol))
                 return cellArray[i];
         return null;
+    }
+
+    @Override
+    public String toString() {
+        return "{(" + index + ") " + Arrays.toString(cellArray) + "} -> ";
     }
 }

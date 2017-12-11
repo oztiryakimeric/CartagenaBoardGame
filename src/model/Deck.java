@@ -1,3 +1,5 @@
+package model;
+
 import java.util.List;
 import java.util.Stack;
 
@@ -30,7 +32,7 @@ public class Deck {
                 deck.add(symbolSet.get(i));
     }
 
-    //Deck tamamen boşalırsa biz burada çok fena patlarız
+    //model.Deck tamamen boşalırsa biz burada çok fena patlarız
     //sormak lazım hocaya kartlat bitince noluyo diye bilemedim bende
     public Symbol getTopCard(){
         return deck.pop();

@@ -1,4 +1,4 @@
-import java.awt.*;
+package model;
 
 /**
  * Created by oztiryakimeric on 9.12.2017.

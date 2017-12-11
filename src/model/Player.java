@@ -1,6 +1,7 @@
+package model;
+
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by oztiryakimeric on 9.12.2017.

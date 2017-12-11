@@ -1,5 +1,6 @@
+package model;
+
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -37,10 +38,10 @@ public class Game {
         }
     }
 
-    /*Segmentle aramaya bir çözüm buldum. Ancak Pawn ve symbol inputlarını nasıl vereceğimizi bir konuşalım.
+    /*Segmentle aramaya bir çözüm buldum. Ancak model.Pawn ve symbol inputlarını nasıl vereceğimizi bir konuşalım.
       İki tur hakkını oyuncu nasıl kullanacak düşünmekte fayda var.
       şimdilik move bir şekilde pawn ve karttan gelecek symbolünü alıyor. Ona göre bir move işlemi yapıyor.
-      Ayrıca Symbol yerine Card mı alsa acaba move methodu?
+      Ayrıca model.Symbol yerine Card mı alsa acaba move methodu?
      */
     public void move(Pawn pawn, Symbol symbol){
         playRound(pawn, symbol);
@@ -79,13 +80,13 @@ public class Game {
         return !currentPlayer.isWinner();
     }
 
-    public List<Player> getPlayers() {
-        return playerList;
+    public Board getBoard() {
+        return board;
     }
 
     @Override
     public String toString() {
-        return "Game{" +
+        return "model.Game{" +
                 "board=" + board +
                 '}';
     }

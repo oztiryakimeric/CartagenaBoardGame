@@ -1,15 +1,20 @@
-import java.util.ArrayList;
+package model;
+
 import java.util.Arrays;
 
 /**
  * Created by oztiryakimeric on 9.12.2017.
  */
 public class Board {
+    private BeginCell beginingCell;
     private Segment[] segmentArray;
+    private BoatCell boatCell;
     private static Board instance;
 
     private Board() {
         segmentArray = new Segment[6];
+        beginingCell = BeginCell.newInstance();
+        boatCell = BoatCell.newInstance();
         initSegments();
     }
 
@@ -27,7 +32,7 @@ public class Board {
         BoatCell.newInstance();
     }
 
-    public Segment[] getSegmentList(){
+    public Segment[] getSegmentArray(){
         return segmentArray;
     }
 
@@ -43,8 +48,16 @@ public class Board {
             return BoatCell.newInstance();
     }
 
+    public BeginCell getBeginingCell() {
+        return beginingCell;
+    }
+
+    public BoatCell getBoatCell() {
+        return boatCell;
+    }
+
     @Override
     public String toString() {
-        return "Board : " + BeginCell.newInstance().toString() + Arrays.toString(segmentArray) + BoatCell.newInstance();
+        return "model.Board : " + BeginCell.newInstance().toString() + Arrays.toString(segmentArray) + BoatCell.newInstance();
     }
 }

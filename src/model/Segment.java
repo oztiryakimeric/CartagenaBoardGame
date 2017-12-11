@@ -1,16 +1,14 @@
-import sun.jvm.hotspot.debugger.cdbg.Sym;
+package model;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by oztiryakimeric on 9.12.2017.
  */
 public class Segment {
-    private GameCell[] cellArray;
     private int index;
+    private GameCell[] cellArray;
 
     public Segment(int index, int length) {
         this.index = index;
@@ -31,6 +29,14 @@ public class Segment {
             if(cellArray[i].getSymbol().equals(symbol))
                 return cellArray[i];
         return null;
+    }
+
+    public GameCell[] getCellArray() {
+        return cellArray;
+    }
+
+    public int getIndex() {
+        return index;
     }
 
     @Override

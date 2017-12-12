@@ -14,6 +14,10 @@ public class GameCell extends Cell{
         return symbol;
     }
 
+    public Segment getSegment() {
+        return segment;
+    }
+
     @Override
     public String toString() {
         return symbol.toString();

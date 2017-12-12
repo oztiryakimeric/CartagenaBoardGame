@@ -3,7 +3,7 @@ package model;
 public class BeginCell extends Cell{
     private static BeginCell instance;
 
-    public static BeginCell newInstance(){
+    public static BeginCell getInstance(){
         if(instance == null)
             instance = new BeginCell();
         return instance;

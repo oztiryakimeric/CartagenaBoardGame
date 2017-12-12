@@ -7,14 +7,14 @@ import java.util.Arrays;
  */
 public class Board {
     private BeginCell beginingCell;
-    private Segment[] segmentArray;
+    private Segment[] segments;
     private BoatCell boatCell;
     private static Board instance;
 
     private Board(int segmentCount) {
-        segmentArray = new Segment[segmentCount];
-        beginingCell = BeginCell.newInstance();
-        boatCell = BoatCell.newInstance();
+        segments = new Segment[segmentCount];
+        beginingCell = BeginCell.getInstance();
+        boatCell = BoatCell.getInstance();
         initSegments();
     }
 
@@ -25,21 +25,27 @@ public class Board {
     }
 
     private void initSegments(){
-        for(int i = 0; i < segmentArray.length; i++)
-            segmentArray[i] = SegmentBuilder.getRandomlyGeneratedSegment(i, Symbol.getSymbols());
+        for(int i = 0; i < segments.length; i++)
+            segments[i] = SegmentBuilder.getRandomlyGeneratedSegment(i, Symbol.getSymbols());
     }
 
-    public Segment[] getSegmentArray(){
-        return segmentArray;
+    public Segment[] getSegments(){
+        return segments;
     }
 
     public Cell getPossibleCell(Pawn pawn, Symbol symbol){
-        int pawnSegment = pawn.getIndex() / 6;
-        Cell cell = segmentArray[pawnSegment].findCell(symbol);
-        if(cell != null && cell.getIndex() > pawn.getIndex())
-            return cell;
+        Cell possibleCell = null;
+        if(pawn.getCell() instanceof GameCell)
+            possibleCell = ((GameCell)pawn.getCell()).getSegment().findCell(symbol);
+        else if(pawn.getCell() instanceof BeginCell)
+            possibleCell = segments[0].findCell(symbol);
+        else if(pawn.getCell() instanceof BoatCell)
+            possibleCell = BoatCell.getInstance();
+
+        if(possibleCell != null && possibleCell.isFurther(pawn.getCell()))
+            return possibleCell;
         else
-            return BoatCell.newInstance();
+            return BoatCell.getInstance();
     }
 
     public BeginCell getBeginingCell() {
@@ -52,6 +58,6 @@ public class Board {
 
     @Override
     public String toString() {
-        return "model.Board : " + BeginCell.newInstance().toString() + Arrays.toString(segmentArray) + BoatCell.newInstance();
+        return "model.Board : " + BeginCell.getInstance().toString() + Arrays.toString(segments) + BoatCell.getInstance();
     }
 }

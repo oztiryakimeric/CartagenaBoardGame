@@ -13,5 +13,9 @@ public class Cell{
     public int getIndex() {
         return index;
     }
+
+    public boolean isFurther(Cell c){
+        return this.index > c.index;
+    }
 }
 

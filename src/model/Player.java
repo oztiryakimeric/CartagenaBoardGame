@@ -48,7 +48,7 @@ public class Player {
     public boolean isWinner(){
         int pawnInBoatCount = 0;
         for(int i=0; i<pawnArray.length; i++)
-            if(pawnArray[i].getIndex() == 38)
+            if(pawnArray[i].getCell().equals(BoatCell.getInstance()))
                 pawnInBoatCount++;
         return pawnInBoatCount == 6;
     }

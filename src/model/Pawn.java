@@ -5,21 +5,21 @@ package model;
  */
 
 public class Pawn {
-    private int index;
+    private Cell cell;
 
     public Pawn() {
-        index = 0;
+        cell = BeginCell.getInstance();
     }
 
     public void move(Cell cell){
-        index = cell.getIndex();
+        cell = cell;
     }
 
-    public int getIndex(){
-        return index;
+    public Cell getCell() {
+        return cell;
     }
 
-    void setIndex(int index){
-        this.index = index;
+    public void setCell(Cell cell) {
+        this.cell = cell;
     }
 }

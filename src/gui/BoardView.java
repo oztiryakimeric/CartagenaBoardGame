@@ -41,8 +41,8 @@ public class BoardView extends JPanel {
         }
 
         private void drawSegment(Graphics g, Segment segment){
-            for(int i=0; i<segment.getCellArray().length; i++)
-                drawCell(g, segment, segment.getCellArray()[i]);
+            for(int i = 0; i<segment.getCells().length; i++)
+                drawCell(g, segment, segment.getCells()[i]);
         }
 
         private void drawCell(Graphics g, Segment segment, Cell cell){

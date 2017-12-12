@@ -16,7 +16,7 @@ public class Game {
     public Game(int numPlayers){
         this.numPlayers = numPlayers;
         playerList = new ArrayList<>();
-        board = Board.getInstance();
+        board = Board.getInstance(6);
         initDeck();
         initPlayers();
     }
@@ -28,7 +28,6 @@ public class Game {
 
     private void initPlayers(){
         for(int i = 0; i < numPlayers; i++){
-            //burda ufak bi hata vardı, duzelttim.
             Player player = new Player(i);
 
             for(int j = 0; j < 6; j++)
@@ -38,11 +37,6 @@ public class Game {
         }
     }
 
-    /*Segmentle aramaya bir çözüm buldum. Ancak model.Pawn ve symbol inputlarını nasıl vereceğimizi bir konuşalım.
-      İki tur hakkını oyuncu nasıl kullanacak düşünmekte fayda var.
-      şimdilik move bir şekilde pawn ve karttan gelecek symbolünü alıyor. Ona göre bir move işlemi yapıyor.
-      Ayrıca model.Symbol yerine Card mı alsa acaba move methodu?
-     */
     public void move(Pawn pawn, Symbol symbol){
         playRound(pawn, symbol);
         boolean wantSecondRound = false;
@@ -61,8 +55,6 @@ public class Game {
     }
 
     private void playRound(Pawn pawn, Symbol symbol){
-        //burayı alt classlara tasıdım
-        //burada board classına bu pawn ve sembol ıcın mumkun bi cell ver diyorum.
         Cell destinationCell = board.getPossibleCell(pawn, symbol);
         pawn.move(destinationCell);
     }
@@ -72,7 +64,6 @@ public class Game {
     }
 
     public void switchToNextPlayer(){
-        //turn count'a gerek kalmadan boyle hesaplayabiliriz.
         currentPlayer = playerList.get((playerList.indexOf(currentPlayer) + 1) % playerList.size());
     }
 

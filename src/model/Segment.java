@@ -8,31 +8,26 @@ import java.util.List;
  */
 public class Segment {
     private int index;
-    private GameCell[] cellArray;
+    private GameCell[] cells;
 
     public Segment(int index, int length) {
         this.index = index;
-        cellArray = new GameCell[length];
-        initCells();
-    }
-
-    private void initCells(){
-        List<Symbol> shuffledSymbols = Symbol.generateRandomSymbolSet();
-
-        for(int i = 0; i < cellArray.length; i++)
-            cellArray[i] = new GameCell(this, i, shuffledSymbols.get(i));
-
+        cells = new GameCell[length];
     }
 
     public GameCell findCell(Symbol symbol){
-        for(int i=0; i<cellArray.length; i++)
-            if(cellArray[i].getSymbol().equals(symbol))
-                return cellArray[i];
+        for(int i = 0; i< cells.length; i++)
+            if(cells[i].getSymbol().equals(symbol))
+                return cells[i];
         return null;
     }
 
-    public GameCell[] getCellArray() {
-        return cellArray;
+    public GameCell[] getCells() {
+        return cells;
+    }
+
+    public void setCells(GameCell[] cells) {
+        this.cells = cells;
     }
 
     public int getIndex() {
@@ -41,6 +36,6 @@ public class Segment {
 
     @Override
     public String toString() {
-        return "{(" + index + ") " + Arrays.toString(cellArray) + "} -> ";
+        return "{(" + index + ") " + Arrays.toString(cells) + "} -> ";
     }
 }

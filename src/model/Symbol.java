@@ -10,7 +10,7 @@ import java.util.List;
 public enum Symbol {
     BOTTLE, KEYS, SWORD, SKULL, HAT, PISTOL;
 
-    public static List<Symbol> generateRandomSymbolSet(){
+    public static List<Symbol> getSymbols(){
         List<Symbol> symbolList = new ArrayList<>();
         symbolList.add(BOTTLE);
         symbolList.add(KEYS);
@@ -18,25 +18,7 @@ public enum Symbol {
         symbolList.add(SKULL);
         symbolList.add(HAT);
         symbolList.add(PISTOL);
-        Collections.shuffle(symbolList);
         return symbolList;
-    }
-
-    public static List<Symbol> generateDeckSymbolSet(){
-        List<Symbol> deckSymbols = new ArrayList<>();
-
-        for(int i = 0; i < 30; i++){
-            deckSymbols.add(BOTTLE);
-            deckSymbols.add(KEYS);
-            deckSymbols.add(SWORD);
-            deckSymbols.add(SKULL);
-            deckSymbols.add(HAT);
-            deckSymbols.add(PISTOL);
-        }
-
-        Collections.shuffle(deckSymbols);
-
-        return deckSymbols;
     }
 
     public String toString(){

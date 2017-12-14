@@ -25,7 +25,6 @@ public class Game {
         deck = Deck.getInstance();
     }
 
-
     private void initPlayers(){
         for(int i = 0; i < numPlayers; i++){
             Player player = new Player(i);
@@ -73,6 +72,10 @@ public class Game {
 
     public Board getBoard() {
         return board;
+    }
+
+    public List<Player> getPlayerList() {
+        return playerList;
     }
 
     @Override

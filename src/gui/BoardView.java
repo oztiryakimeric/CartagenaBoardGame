@@ -1,9 +1,6 @@
 package gui;
 
-import model.Board;
-import model.Cell;
-import model.GameCell;
-import model.Segment;
+import model.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,23 +9,37 @@ import java.awt.*;
  * Created by oztiryakimeric on 12.12.2017.
  */
 public class BoardView extends JPanel {
-    private Board board;
 
+    private final Game game;
 
-    public BoardView(Board board) {
-        this.board = board;
-
+    public BoardView(Game game) {
+        this.game = game;
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        drawPawns(g);
+        drawBoard(g);
 
-        drawBeginingCell(g);
+    }
 
-        for (int i = 0; i<board.getSegments().length; i++) {
-            drawSegment(g, board.getSegments()[i]);
+    private void drawPawns(Graphics g){
+        for(Player p: game.getPlayerList()){
+            drawPawns(g, p.getColor(), p.getPawns());
         }
+    }
+
+    private void drawPawns(Graphics g, Color c, Pawn[] pawns){
+        for(int i=0; i<pawns.length; i++){
+
+        }
+    }
+
+    private void drawBoard(Graphics g){
+        drawBeginingCell(g);
+        for (int i = 0; i<game.getBoard().getSegments().length; i++)
+            drawSegment(g, game.getBoard().getSegments()[i]);
         drawBoatCell(g);
     }
 
@@ -61,21 +72,17 @@ public class BoardView extends JPanel {
 
     private void drawCell(Graphics g, Segment segment, GameCell cell){
         //if segment index is even draw right to left, otherwise draw left to right
-        int multiplier = cell.getIndex();
-        if(segment.getIndex() % 2 == 1)
-            multiplier = columnCount() - multiplier -1;
+        Point position = cellPosition(cell);
 
-        int xPos = cellWidth() * (1 + multiplier);
-        int yPos = cellHeight() * segment.getIndex();
-
-        g.setColor(decideColor(cell, Color.green, Color.yellow));
-        g.fillRect(xPos,yPos, cellWidth(), cellHeight());
+        g.setColor(decideCellColor(cell, Color.green, Color.yellow));
+        g.fillRect(position.x, position.y, cellWidth(), cellHeight());
 
         g.setColor(Color.black);
-        g.drawString(String.valueOf(cell.getIndex() + " " + cell.getSymbol()), xPos + 25, yPos + 25);
+        g.drawString(String.valueOf(cell.getIndex() + cell.getSegment().getIndex() * columnCount() + " " + cell.getSymbol()), position.x + 25, position.y + 25);
     }
 
-    private Color decideColor(GameCell cell, Color c1, Color c2){
+    //Not working if column count is odd
+    private Color decideCellColor(GameCell cell, Color c1, Color c2){
         if(cell.getSegment().getIndex() % 2 == 1)
             if(cell.getIndex()%2 == cell.getSegment().getIndex()%2)
                 return c1;
@@ -89,11 +96,11 @@ public class BoardView extends JPanel {
     }
 
     private int rowCount(){
-        return board.getSegments().length;
+        return game.getBoard().getSegments().length;
     }
 
     private int columnCount(){
-        return board.getSegments()[0].getCells().length;
+        return game.getBoard().getSegments()[0].getCells().length;
     }
 
     private int cellWidth(){
@@ -102,6 +109,16 @@ public class BoardView extends JPanel {
 
     private int cellHeight(){
         return getHeight() / (rowCount() + 1);
+    }
+
+    private Point cellPosition(GameCell c){
+        int multiplier = c.getIndex();
+        if(c.getSegment().getIndex() % 2 == 1)
+            multiplier = columnCount() - multiplier -1;
+
+        int xPos = cellWidth() * (1 + multiplier);
+        int yPos = cellHeight() * c.getSegment().getIndex();
+        return new Point(xPos, yPos);
     }
 
 }

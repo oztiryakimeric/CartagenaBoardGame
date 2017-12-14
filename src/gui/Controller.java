@@ -19,7 +19,7 @@ public class Controller {
 
     public void start(){
         JFrame frame = new JFrame("Cartagena");
-        frame.setSize(700, 600);
+        frame.setSize(900, 800);
         frame.setLayout(new BorderLayout());
         frame.add(gui, BorderLayout.CENTER);
         frame.setVisible(true);

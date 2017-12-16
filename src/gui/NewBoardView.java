@@ -1,11 +1,15 @@
 package gui;
 
+import model.Cell;
 import model.Game;
 import model.GameCell;
 import model.Segment;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 /**
  * Created by oztiryakimeric on 16.12.2017.
@@ -13,9 +17,27 @@ import java.awt.*;
 public class NewBoardView extends JPanel {
 
     private Game game;
+    private CellSelectListener listener;
 
     public NewBoardView(Game game) {
         this.game = game;
+        startListener();
+    }
+
+    private void startListener(){
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                if(listener != null)
+                    listener.cellSelected(getCell(new Point(e.getX(), e.getY())));
+            }
+        });
+    }
+
+    public void highlightCell(GameCell cell){
+        Point position = getPosition(cell);
+        
     }
 
     @Override
@@ -46,6 +68,15 @@ public class NewBoardView extends JPanel {
         return new Point(xPos, yPos);
     }
 
+    private GameCell getCell(Point position){
+        int segmentIndex = position.y / cellHeight();
+        int cellIndex = position.x / cellWidth() - 1;
+        if(segmentIndex % 2 == 1){
+            cellIndex = columnCount() - cellIndex - 1;
+        }
+        return game.getBoard().getSegments()[segmentIndex].getCells()[cellIndex];
+    }
+
     private int rowCount(){
         return game.getBoard().getSegments().length;
     }
@@ -60,6 +91,10 @@ public class NewBoardView extends JPanel {
 
     private int cellHeight(){
         return getHeight() / (rowCount() + 1);
+    }
+
+    public void addCellSelectListener(CellSelectListener listener){
+        this.listener = listener;
     }
 
     private class EmptyBoard{
@@ -125,7 +160,7 @@ public class NewBoardView extends JPanel {
         }
 
         private void drawBoat(){
-            
+
         }
 
         private void drawTopSegment(){
@@ -203,6 +238,9 @@ public class NewBoardView extends JPanel {
     }
 }
 
+interface CellSelectListener{
+    void cellSelected(GameCell cell);
+}
 
 
 

@@ -1,6 +1,7 @@
 package gui;
 
 import model.Game;
+import model.GameCell;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +20,12 @@ public class Gui extends JPanel {
 
         boardView = new NewBoardView(game);
         add(boardView, BorderLayout.CENTER);
-
+        boardView.addCellSelectListener(new CellSelectListener() {
+            @Override
+            public void cellSelected(GameCell cell) {
+                System.out.println(cell.toString());
+            }
+        });
 
     }
 }

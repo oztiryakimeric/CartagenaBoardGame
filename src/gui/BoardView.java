@@ -110,14 +110,7 @@ public class BoardView extends JPanel {
         return getHeight() / (rowCount() + 1);
     }
 
-    private Point cellPosition(GameCell c){
-        int multiplier = c.getIndex();
-        if(c.getSegment().getIndex() % 2 == 1)
-            multiplier = columnCount() - multiplier -1;
-
-        int xPos = cellWidth() * (1 + multiplier);
-        int yPos = cellHeight() * c.getSegment().getIndex();
-        return new Point(xPos, yPos);
+    private Point cellPosition(GameCell c){return null;
     }
 
 }

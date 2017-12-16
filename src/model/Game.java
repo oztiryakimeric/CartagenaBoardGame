@@ -36,15 +36,15 @@ public class Game {
         }
     }
 
-    public void move(Pawn pawn, Symbol symbol){
-        playRound(pawn, symbol);
+    public void move(Pirate pirate, Symbol symbol){
+        playRound(pirate, symbol);
         boolean wantSecondRound = false;
 
         if(!wantSecondRound){
             currentPlayer().addCard(deck.getTopCard());
             currentPlayer().addCard(deck.getTopCard());
         } else {
-            playRound(pawn, symbol);
+
             currentPlayer().addCard(deck.getTopCard());
         }
 
@@ -53,9 +53,9 @@ public class Game {
         }
     }
 
-    private void playRound(Pawn pawn, Symbol symbol){
-        Cell destinationCell = board.getPossibleCell(pawn, symbol);
-        pawn.move(destinationCell);
+    private void playRound(Pirate pirate, Symbol symbol){
+        Cell destinationCell = board.getPossibleCell(pirate, symbol);
+        pirate.move(destinationCell);
     }
 
     public Player currentPlayer(){

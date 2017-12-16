@@ -21,17 +21,16 @@ public class BoardView extends JPanel {
         super.paintComponent(g);
         drawPawns(g);
         drawBoard(g);
-
     }
 
     private void drawPawns(Graphics g){
         for(Player p: game.getPlayerList()){
-            drawPawns(g, p.getColor(), p.getPawns());
+            drawPawns(g, p.getColor(), p.getPirates());
         }
     }
 
-    private void drawPawns(Graphics g, Color c, Pawn[] pawns){
-        for(int i=0; i<pawns.length; i++){
+    private void drawPawns(Graphics g, Color c, Pirate[] pirates){
+        for(int i = 0; i< pirates.length; i++){
 
         }
     }

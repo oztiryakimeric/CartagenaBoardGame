@@ -4,10 +4,10 @@ package model;
  * Created by oztiryakimeric on 9.12.2017.
  */
 
-public class Pawn {
+public class Pirate {
     private Cell cell;
 
-    public Pawn() {
+    public Pirate() {
         cell = BeginCell.getInstance();
     }
 

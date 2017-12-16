@@ -33,16 +33,16 @@ public class Board {
         return segments;
     }
 
-    public Cell getPossibleCell(Pawn pawn, Symbol symbol){
+    public Cell getPossibleCell(Pirate pirate, Symbol symbol){
         Cell possibleCell = null;
-        if(pawn.getCell() instanceof GameCell)
-            possibleCell = ((GameCell)pawn.getCell()).getSegment().findCell(symbol);
-        else if(pawn.getCell() instanceof BeginCell)
+        if(pirate.getCell() instanceof GameCell)
+            possibleCell = ((GameCell) pirate.getCell()).getSegment().findCell(symbol);
+        else if(pirate.getCell() instanceof BeginCell)
             possibleCell = segments[0].findCell(symbol);
-        else if(pawn.getCell() instanceof BoatCell)
+        else if(pirate.getCell() instanceof BoatCell)
             possibleCell = BoatCell.getInstance();
 
-        if(possibleCell != null && possibleCell.isFurther(pawn.getCell()))
+        if(possibleCell != null && possibleCell.isFurther(pirate.getCell()))
             return possibleCell;
         else
             return BoatCell.getInstance();

@@ -17,6 +17,7 @@ public class BoardView extends JPanel {
     private Game game;
     private CellSelectListener listener;
     private List<HighlightedCell> highlightedCellList;
+    private boolean enabled = true;
 
     public BoardView(Game game) {
         this.game = game;
@@ -30,10 +31,18 @@ public class BoardView extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                if(listener != null)
+                if(listener != null && isEnabled())
                     listener.cellSelected(getCell(new Point(e.getX(), e.getY())));
             }
         });
+    }
+
+    public void setEnabled(boolean b){
+        this.enabled = b;
+    }
+
+    public boolean isEnabled(){
+        return this.enabled;
     }
 
     public void highlightCell(Cell cell, Color c){

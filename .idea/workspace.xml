@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1e4972b9-ab9d-4e59-b0e4-f9e0661c3ac7" name="Default" comment="">
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/gui/NewBoardView.java" afterPath="$PROJECT_DIR$/src/gui/BoardView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/BoardView.java" afterPath="$PROJECT_DIR$/src/gui/BoardView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/Controller.java" afterPath="$PROJECT_DIR$/src/gui/Controller.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/Gui.java" afterPath="$PROJECT_DIR$/src/gui/Gui.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/Main.java" afterPath="$PROJECT_DIR$/src/gui/Main.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/gui/PlayerView.java" afterPath="$PROJECT_DIR$/src/gui/PlayerView.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -23,13 +22,49 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="PlayerView.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PlayerView.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/PlayerView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="559">
-              <caret line="77" column="38" lean-forward="false" selection-start-line="77" selection-start-column="38" selection-end-line="77" selection-end-column="38" />
+            <state relative-caret-position="88">
+              <caret line="170" column="14" lean-forward="false" selection-start-line="170" selection-start-column="14" selection-end-line="170" selection-end-column="14" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#1322#1323#0" expanded="false" />
+                <element signature="e#1362#1363#0" expanded="false" />
+                <element signature="method#initializeSelectPirateRow#0;class#PlayerView#0" expanded="false" />
+                <element signature="method#initializeChooseActionRow#0;class#PlayerView#0" expanded="false" />
+                <element signature="method#initializeChooseCardRow#0;class#PlayerView#0" expanded="false" />
+                <element signature="method#populateDeckComboBox#0;class#PlayerView#0" expanded="false" />
+                <element signature="method#initializePlayRow#0;class#PlayerView#0" expanded="false" />
+                <element signature="method#setEnabledActionRow#0;class#PlayerView#0" expanded="false" />
+                <element signature="e#4803#4804#0" expanded="false" />
+                <element signature="e#4845#4846#0" expanded="false" />
+                <element signature="method#setEnabledPlayRow#0;class#PlayerView#0" expanded="false" />
+                <element signature="method#pirateSelected#0;class#PlayerView#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Gui.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gui/Gui.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="25" column="43" lean-forward="false" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <marker date="1513545605205" expanded="true" signature="300:575" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Controller.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/gui/Controller.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="454">
+              <caret line="41" column="58" lean-forward="false" selection-start-line="41" selection-start-column="58" selection-end-line="41" selection-end-column="58" />
+              <folding>
+                <element signature="imports" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -80,15 +115,15 @@
         <option value="$PROJECT_DIR$/src/model/Pawn.java" />
         <option value="$PROJECT_DIR$/src/model/Pirate.java" />
         <option value="$PROJECT_DIR$/src/model/Player.java" />
-        <option value="$PROJECT_DIR$/src/gui/Controller.java" />
         <option value="$PROJECT_DIR$/src/model/Symbol.java" />
         <option value="$PROJECT_DIR$/src/model/Game.java" />
         <option value="$PROJECT_DIR$/src/gui/PlayerForm.form" />
         <option value="$PROJECT_DIR$/src/gui/Main.java" />
-        <option value="$PROJECT_DIR$/src/gui/Gui.java" />
         <option value="$PROJECT_DIR$/src/gui/p.form" />
         <option value="$PROJECT_DIR$/src/gui/NewBoardView.java" />
+        <option value="$PROJECT_DIR$/src/gui/Gui.java" />
         <option value="$PROJECT_DIR$/src/gui/BoardView.java" />
+        <option value="$PROJECT_DIR$/src/gui/Controller.java" />
         <option value="$PROJECT_DIR$/src/gui/PlayerView.java" />
       </list>
     </option>
@@ -150,6 +185,28 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="model" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CS534Fa17_meric.oztiryaki_taha.darendeli" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CS534Fa17_meric.oztiryaki_taha.darendeli" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PlayerView.java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -673,7 +730,7 @@
       <workItem from="1513201057407" duration="3158000" />
       <workItem from="1513241015242" duration="2318000" />
       <workItem from="1513454282815" duration="8901000" />
-      <workItem from="1513509149154" duration="15124000" />
+      <workItem from="1513509149154" duration="19283000" />
     </task>
     <task id="LOCAL-00001" summary="Some refactoring...">
       <created>1512943671995</created>
@@ -745,14 +802,21 @@
       <option name="project" value="LOCAL" />
       <updated>1513519529832</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="PlayerView implementation started">
+      <created>1513529269552</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1513529269552</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="49264000" />
+    <option name="totallyTimeSpent" value="53423000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1920" y="-180" width="1920" height="1080" extended-state="6" />
+    <frame x="-1920" y="-180" width="1920" height="1080" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -800,7 +864,8 @@
     <MESSAGE value="BoardView class updated." />
     <MESSAGE value="BoardView mouse click listener implemented." />
     <MESSAGE value="BoardView update. It can draw pirates." />
-    <option name="LAST_COMMIT_MESSAGE" value="BoardView update. It can draw pirates." />
+    <MESSAGE value="PlayerView implementation started" />
+    <option name="LAST_COMMIT_MESSAGE" value="PlayerView implementation started" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -826,7 +891,7 @@
         <state relative-caret-position="255">
           <caret line="20" column="23" lean-forward="false" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="23" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -885,7 +950,7 @@
         <state relative-caret-position="255">
           <caret line="20" column="23" lean-forward="false" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="23" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1143,14 +1208,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="27" column="5" lean-forward="true" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/model/Cell.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -1206,24 +1263,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/Gui.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="44" lean-forward="false" selection-start-line="21" selection-start-column="44" selection-end-line="21" selection-end-column="44" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/model/Symbol.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -1244,12 +1283,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/BoardView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="324" column="0" lean-forward="true" selection-start-line="324" selection-start-column="0" selection-end-line="324" selection-end-column="0" />
+        <state relative-caret-position="-1316">
+          <caret line="33" column="50" lean-forward="false" selection-start-line="33" selection-start-column="50" selection-end-line="33" selection-end-column="50" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#981#982#0" expanded="true" />
+            <element signature="e#1013#1014#0" expanded="true" />
+            <element signature="e#1046#1047#0" expanded="true" />
+            <element signature="e#1081#1082#0" expanded="true" />
             <element signature="method#getPosition#0;class#BoardView#0" expanded="false" />
             <element signature="class#BoardDrawer#0;class#BoardView#0" expanded="false" />
             <element signature="method#drawGrid#0;class#BoardDrawer#0;class#BoardView#0" expanded="false" />
@@ -1261,18 +1312,48 @@
             <element signature="method#drawRighToLeftSegment#0;class#BoardDrawer#0;class#BoardView#0" expanded="false" />
             <element signature="method#drawCellsInfo#0;class#BoardDrawer#0;class#BoardView#0" expanded="false" />
             <element signature="method#transfromSymbol#0;class#BoardDrawer#0;class#BoardView#0" expanded="false" />
-            <element signature="method#drawPlayer#0;class#PirateDrawer#0;class#BoardView#0" expanded="false" />
-            <element signature="method#mapCells#0;class#PirateDrawer#0;class#BoardView#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Gui.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="25" column="43" lean-forward="false" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <marker date="1513545605205" expanded="true" signature="300:575" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/PlayerView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="559">
-          <caret line="77" column="38" lean-forward="false" selection-start-line="77" selection-start-column="38" selection-end-line="77" selection-end-column="38" />
+        <state relative-caret-position="88">
+          <caret line="170" column="14" lean-forward="false" selection-start-line="170" selection-start-column="14" selection-end-line="170" selection-end-column="14" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#1322#1323#0" expanded="false" />
+            <element signature="e#1362#1363#0" expanded="false" />
+            <element signature="method#initializeSelectPirateRow#0;class#PlayerView#0" expanded="false" />
+            <element signature="method#initializeChooseActionRow#0;class#PlayerView#0" expanded="false" />
+            <element signature="method#initializeChooseCardRow#0;class#PlayerView#0" expanded="false" />
+            <element signature="method#populateDeckComboBox#0;class#PlayerView#0" expanded="false" />
+            <element signature="method#initializePlayRow#0;class#PlayerView#0" expanded="false" />
+            <element signature="method#setEnabledActionRow#0;class#PlayerView#0" expanded="false" />
+            <element signature="e#4803#4804#0" expanded="false" />
+            <element signature="e#4845#4846#0" expanded="false" />
+            <element signature="method#setEnabledPlayRow#0;class#PlayerView#0" expanded="false" />
+            <element signature="method#pirateSelected#0;class#PlayerView#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="454">
+          <caret line="41" column="58" lean-forward="false" selection-start-line="41" selection-start-column="58" selection-end-line="41" selection-end-column="58" />
+          <folding>
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>

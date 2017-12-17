@@ -13,6 +13,7 @@ public class Gui extends JPanel {
     private Game game;
 
     private BoardView boardView;
+    private PlayerView playerView;
 
     public Gui(Game game) {
         this.game = game;
@@ -21,21 +22,19 @@ public class Gui extends JPanel {
         boardView = new BoardView(game);
         add(boardView, BorderLayout.CENTER);
 
-        PlayerView playerView = new PlayerView(game.getPlayerList().get(0));
+        playerView = new PlayerView(game.getPlayerList().get(0));
         add(playerView, BorderLayout.EAST);
+    }
 
-        boardView.addCellSelectListener(new CellSelectListener() {
-            @Override
-            public void cellSelected(Cell cell) {
-                System.out.println(cell.toString());
-                boardView.highlightCell(cell, Color.green);
+    public Game getGame() {
+        return game;
+    }
 
-            }
-        });
+    public BoardView getBoardView() {
+        return boardView;
+    }
 
-        Cell cell = game.getBoard().getSegments()[0].getCells()[2];
-        game.getPlayerList().get(0).getPirateList().get(0).setCell(cell);
-        boardView.repaint();
-
+    public PlayerView getPlayerView() {
+        return playerView;
     }
 }

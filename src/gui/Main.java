@@ -11,8 +11,6 @@ public class Main {
 
         Gui gui = new Gui(game);
 
-
-
         Controller controller = new Controller(gui, game);
         controller.start();
     }

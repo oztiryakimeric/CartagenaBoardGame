@@ -12,13 +12,13 @@ import java.util.List;
 /**
  * Created by oztiryakimeric on 16.12.2017.
  */
-public class NewBoardView extends JPanel {
+public class BoardView extends JPanel {
 
     private Game game;
     private CellSelectListener listener;
     private List<HighlightedCell> highlightedCellList;
 
-    public NewBoardView(Game game) {
+    public BoardView(Game game) {
         this.game = game;
         highlightedCellList = new ArrayList<>();
 
@@ -36,8 +36,13 @@ public class NewBoardView extends JPanel {
         });
     }
 
-    public void highlightCell(GameCell cell, Color c){
+    public void highlightCell(Cell cell, Color c){
         highlightedCellList.add(new HighlightedCell(cell, c));
+        this.repaint();
+    }
+
+    public void removeHighlights(){
+        highlightedCellList.clear();
         this.repaint();
     }
 
@@ -337,19 +342,19 @@ public class NewBoardView extends JPanel {
 }
 
 interface CellSelectListener{
-    void cellSelected(GameCell cell);
+    void cellSelected(Cell cell);
 }
 
 class HighlightedCell{
-    private GameCell cell;
+    private Cell cell;
     private Color color;
 
-    public HighlightedCell(GameCell cell, Color color) {
+    public HighlightedCell(Cell cell, Color color) {
         this.cell = cell;
         this.color = color;
     }
 
-    public GameCell getCell() {
+    public Cell getCell() {
         return cell;
     }
 

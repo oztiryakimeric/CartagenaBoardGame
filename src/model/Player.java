@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Player {
     private int id;
     private Color color;
-    private Pirate[] pirates;
+    private ArrayList<Pirate> pirateList;
     private ArrayList<Symbol> deck;
 
     public Player(int id) {
@@ -35,16 +35,16 @@ public class Player {
     }
 
     private void createPawns(int count){
-        pirates = new Pirate[count];
+        pirateList = new ArrayList<>(count);
 
         for(int i=0; i<count; i++)
-            pirates[i] = new Pirate();
+            pirateList.add(new Pirate());
     }
 
     public boolean isWinner(){
         int pawnInBoatCount = 0;
-        for(int i = 0; i< pirates.length; i++)
-            if(pirates[i].getCell().equals(BoatCell.getInstance()))
+        for(Pirate p: pirateList)
+            if(p.getCell().equals(BoatCell.getInstance()))
                 pawnInBoatCount++;
         return pawnInBoatCount == 6;
     }
@@ -61,7 +61,11 @@ public class Player {
         return deck;
     }
 
-    public Pirate[] getPirates() {
-        return pirates;
+    public ArrayList<Pirate> getPirateList() {
+        return pirateList;
+    }
+
+    public int getId() {
+        return id;
     }
 }

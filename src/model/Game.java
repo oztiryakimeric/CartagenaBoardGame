@@ -16,7 +16,7 @@ public class Game {
     public Game(int numPlayers){
         this.numPlayers = numPlayers;
         playerList = new ArrayList<>();
-        board = Board.getInstance(6);
+        board = Board.getInstance(7);
         initDeck();
         initPlayers();
     }

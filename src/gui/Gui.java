@@ -1,5 +1,6 @@
 package gui;
 
+import model.Cell;
 import model.Game;
 import model.GameCell;
 
@@ -20,12 +21,18 @@ public class Gui extends JPanel {
 
         boardView = new NewBoardView(game);
         add(boardView, BorderLayout.CENTER);
+
         boardView.addCellSelectListener(new CellSelectListener() {
             @Override
             public void cellSelected(GameCell cell) {
                 System.out.println(cell.toString());
+                boardView.highlightCell(cell, Color.green);
             }
         });
+
+        Cell cell = game.getBoard().getSegments()[0].getCells()[2];
+        game.getPlayerList().get(0).getPirateList().get(0).setCell(cell);
+        boardView.repaint();
 
     }
 }

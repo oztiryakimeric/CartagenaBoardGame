@@ -14,34 +14,16 @@ public class Controller {
     private Gui gui;
     private Game game;
 
+    private Cell selectedCell;
+    private String selectedAction;
+    private Symbol selectedSymbol;
+
     public Controller(Gui gui, Game game) {
         this.gui = gui;
         this.game = game;
 
-        gui.getBoardView().addCellSelectListener(new CellSelectListener() {
-            @Override
-            public void cellSelected(Cell cell) {
-                gui.getBoardView().highlightCell(cell, Color.green);
-                gui.getBoardView().setEnabled(false);
-
-                gui.getPlayerView().pirateSelected(null);
-                gui.getPlayerView().setEnabledActionRow(true);
-
-            }
-        });
-
-        gui.getPlayerView().addInteractionListener(new PlayerViewInteraction() {
-            @Override
-            public void actionSelected(String action) {
-                gui.getPlayerView().setEnabledCardRow(true);
-            }
-
-            @Override
-            public void cardSelected(Symbol symbol) {
-                System.out.println("Player choose card" + symbol.toString());
-                gui.getPlayerView().setEnabledPlayRow(true);
-            }
-        });
+        gui.getBoardView().addCellSelectListener(new BoardViewController());
+        gui.getPlayerView().addInteractionListener(new PlayerViewController());
     }
 
     public void start(){
@@ -53,4 +35,66 @@ public class Controller {
         frame.add(gui, BorderLayout.CENTER);
         frame.setVisible(true);
     }
+
+    private class BoardViewController implements CellSelectListener{
+        @Override
+        public void cellSelected(Cell cell) {
+            selectedCell = cell;
+
+            gui.getBoardView().highlightCell(cell, Color.green);
+            gui.getBoardView().setEnabled(false);
+
+            gui.getPlayerView().pirateSelected(null);
+            gui.getPlayerView().setEnabledActionRow(true);
+        }
+    }
+
+    private class PlayerViewController implements PlayerViewInteraction{
+
+        @Override
+        public void actionSelected(String action) {
+            selectedAction = action;
+            if(action.equals("backward")){
+                gui.getPlayerView().setEnabledActionRow(false);
+                gui.getPlayerView().setEnabledPlayRow(true);
+            }
+            else if(action.equals("forward")){
+                gui.getPlayerView().setEnabledActionRow(false);
+                gui.getPlayerView().setEnabledCardRow(true);
+            }
+        }
+
+        @Override
+        public void cardSelected(Symbol symbol) {
+            selectedSymbol = symbol;
+            gui.getPlayerView().setEnabledCardRow(false);
+            gui.getPlayerView().setEnabledPlayRow(true);
+        }
+
+        @Override
+        public void playClicked() {
+            //burada oynaması lazım pirate veya cell, action ve card felan ile
+            //su an cell var pirate i falan bulmak lazım bi sekilde.........
+            System.out.println("burada oynaması lazım pirate veya cell, action ve card falan ile...........");
+            selectedCell = null;
+            selectedAction = null;
+            selectedSymbol = null;
+
+            gui.getBoardView().removeHighlights();
+            gui.getBoardView().setEnabled(true);
+
+            gui.getPlayerView().initialStateWithSkip();
+        }
+
+        @Override
+        public void skipClicked() {
+            //burada game next oyuncuya geçmeli
+            System.out.println("burada game next oyuncuya geçmeli");
+        }
+    }
 }
+
+
+
+
+

@@ -42,9 +42,7 @@ public class PlayerView extends JPanel {
         initializeChooseCardRow();
         initializePlayRow();
 
-        setEnabledActionRow(false);
-        setEnabledCardRow(false);
-        setEnabledPlayRow(false);
+        initialState();
 
         this.add(container, BorderLayout.NORTH);
     }
@@ -57,7 +55,7 @@ public class PlayerView extends JPanel {
         JPanel piratePanel = new JPanel();
         piratePanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Select Pirate"));
 
-        selectPirateLabel = new JLabel("Click the cell that you want to select.");
+        selectPirateLabel = new JLabel();
         piratePanel.add(selectPirateLabel);
 
         container.add(piratePanel);
@@ -141,11 +139,40 @@ public class PlayerView extends JPanel {
         playButton = new JButton("Play");
         skipButton = new JButton("Skip");
 
+        ActionListener actionListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(e.getSource().equals(playButton) && listener != null){
+                    listener.playClicked();
+                }
+                else if(e.getSource().equals(skipButton) && listener != null){
+                    listener.skipClicked();
+                }
+            }
+        };
+
+        playButton.addActionListener(actionListener);
+        skipButton.addActionListener(actionListener);
 
         playPanel.add(playButton);
         playPanel.add(skipButton);
 
         container.add(playPanel);
+    }
+
+    public void initialState(){
+        selectPirateLabel.setText("Click the cell that you want to select.");
+        selectPirateLabel.setForeground(Color.black);
+        setEnabledActionRow(false);
+        setEnabledCardRow(false);
+        setEnabledPlayRow(false);
+    }
+
+    public void initialStateWithSkip(){
+        initialState();
+        setEnabledPlayRow(true);
+        playButton.setEnabled(false);
+        skipButton.setEnabled(true);
     }
 
     public void setEnabledActionRow(boolean b){
@@ -159,7 +186,7 @@ public class PlayerView extends JPanel {
 
     public void setEnabledPlayRow(boolean b){
         playButton.setEnabled(b);
-        skipButton.setEnabled(b);
+        skipButton.setEnabled(false);
     }
 
     public void pirateSelected(Pirate pirate){
@@ -194,6 +221,8 @@ class DeckItem{
 interface PlayerViewInteraction{
     void actionSelected(String action);
     void cardSelected(Symbol symbol);
+    void playClicked();
+    void skipClicked();
 }
 
 

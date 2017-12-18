@@ -22,7 +22,7 @@ public class Gui extends JPanel {
         boardView = new BoardView(game);
         add(boardView, BorderLayout.CENTER);
 
-        playerView = new PlayerView(game.getPlayerList().get(0));
+        playerView = new PlayerView(game.getCurrentPlayer());
         add(playerView, BorderLayout.EAST);
     }
 

@@ -41,11 +41,11 @@ public class Game {
         boolean wantSecondRound = false;
 
         if(!wantSecondRound){
-            currentPlayer().addCard(deck.getTopCard());
-            currentPlayer().addCard(deck.getTopCard());
+            getCurrentPlayer().addCard(deck.getTopCard());
+            getCurrentPlayer().addCard(deck.getTopCard());
         } else {
 
-            currentPlayer().addCard(deck.getTopCard());
+            getCurrentPlayer().addCard(deck.getTopCard());
         }
 
         if(!isFinished()) {
@@ -58,7 +58,7 @@ public class Game {
         pirate.move(destinationCell);
     }
 
-    public Player currentPlayer(){
+    public Player getCurrentPlayer(){
         return currentPlayer;
     }
 
@@ -77,6 +77,8 @@ public class Game {
     public List<Player> getPlayerList() {
         return playerList;
     }
+
+
 
     @Override
     public String toString() {

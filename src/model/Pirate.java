@@ -12,7 +12,7 @@ public class Pirate {
     }
 
     public void move(Cell cell){
-        cell = cell;
+        this.cell = cell;
     }
 
     public Cell getCell() {

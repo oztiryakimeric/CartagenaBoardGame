@@ -1,7 +1,6 @@
 package model;
 
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by oztiryakimeric on 9.12.2017.
@@ -15,11 +14,42 @@ public class Segment {
         cells = new GameCell[length];
     }
 
-    public GameCell findCell(Symbol symbol){
-        for(int i = 0; i< cells.length; i++)
-            if(cells[i].getSymbol().equals(symbol))
-                return cells[i];
+    public Cell findForwardCell(Cell pirateCell, Symbol symbol, boolean successorSegment){
+        int index;
+        if(successorSegment)
+            index = 0;
+        else {
+            if (pirateCell instanceof BeginCell)
+                index = 0;
+            else
+                index = pirateCell.getIndex() % cells.length;
+        }
+
+        while(index < cells.length) {
+            if (cells[index].getSymbol().equals(symbol) && cells[index].isFurther(pirateCell))
+                return cells[index];
+            index++;
+        }
         return null;
+    }
+
+    public Cell findBackwardCell(Cell pirateCell, int searchingSegment){
+        int index;
+
+        if (pirateCell instanceof BeginCell)
+            return BeginCell.getInstance();
+        else
+            index = pirateCell.getIndex() % cells.length;
+
+        while(index > -1) {
+            if (!cells[index].isOccupied() && cells[index].isFewer(pirateCell))
+                return cells[index];
+            index--;
+        }
+        if(searchingSegment == 0)
+            return BeginCell.getInstance();
+        else
+            return null;
     }
 
     public GameCell[] getCells() {

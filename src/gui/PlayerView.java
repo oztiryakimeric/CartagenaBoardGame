@@ -28,6 +28,8 @@ public class PlayerView extends JPanel {
     private JComboBox<DeckItem> deckComboBox;
     private JButton playButton;
     private JButton skipButton;
+    private JLabel turnHolder = new JLabel();
+    ButtonGroup group;
 
     public PlayerView(Player player) {
         this.player = player;
@@ -35,13 +37,14 @@ public class PlayerView extends JPanel {
         this.setLayout(new BorderLayout());
 
         container = new JPanel();
-        container.setLayout(new GridLayout(4, 1));
+        container.setLayout(new GridLayout(5, 1));
+
 
         initializeSelectPirateRow();
         initializeChooseActionRow();
         initializeChooseCardRow();
         initializePlayRow();
-
+        updateTurn();
         initialState();
 
         this.add(container, BorderLayout.NORTH);
@@ -49,6 +52,12 @@ public class PlayerView extends JPanel {
 
     public void addInteractionListener(PlayerViewInteraction listener){
         this.listener = listener;
+    }
+
+    public void updateTurn(){
+        turnHolder.setText("Player " + (player.getId() + 1) + "'s turn");
+        turnHolder.setForeground(player.getColor());
+        container.add(turnHolder);
     }
 
     private void initializeSelectPirateRow(){
@@ -81,7 +90,7 @@ public class PlayerView extends JPanel {
         backwardRadioButton.addActionListener(actionListener);
         forwardRadioButton.addActionListener(actionListener);
 
-        ButtonGroup group = new ButtonGroup();
+        group = new ButtonGroup();
         group.add(backwardRadioButton);
         group.add(forwardRadioButton);
 
@@ -113,6 +122,7 @@ public class PlayerView extends JPanel {
     }
 
     private void populateDeckComboBox(){
+
         HashMap<Symbol, Integer> cardMap = new HashMap<>();
 
         for(Symbol symbol: player.getDeck()){
@@ -129,6 +139,15 @@ public class PlayerView extends JPanel {
             deckComboBox.addItem(new DeckItem(symbol, count));
             it.remove();
         }
+    }
+
+    public void updateDeckComboBox(){
+        PlayerViewInteraction temp = listener;
+        listener = null;
+        deckComboBox.removeAllItems();
+        populateDeckComboBox();
+        listener = temp;
+        group.clearSelection();
     }
 
     private void initializePlayRow(){
@@ -192,6 +211,10 @@ public class PlayerView extends JPanel {
     public void pirateSelected(Pirate pirate){
         selectPirateLabel.setText("Pirate selected");
         selectPirateLabel.setForeground(Color.green);
+    }
+
+    public void setCurrentPlayer(Player player){
+        this.player = player;
     }
 }
 

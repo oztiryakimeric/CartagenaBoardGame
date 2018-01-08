@@ -33,19 +33,42 @@ public class Board {
         return segments;
     }
 
-    public Cell getPossibleCell(Pirate pirate, Symbol symbol){
+    public Cell getForwardPossibleCell(Pirate pirate, Symbol symbol){
+
+        pirate.getCell().pirateLeft();
         Cell possibleCell = null;
-        if(pirate.getCell() instanceof GameCell)
-            possibleCell = ((GameCell) pirate.getCell()).getSegment().findCell(symbol);
-        else if(pirate.getCell() instanceof BeginCell)
-            possibleCell = segments[0].findCell(symbol);
+
+        if(pirate.getCell() instanceof BeginCell)
+            possibleCell = segments[0].findForwardCell(BeginCell.getInstance(), symbol, false);
         else if(pirate.getCell() instanceof BoatCell)
             possibleCell = BoatCell.getInstance();
+        else if(pirate.getCell() instanceof GameCell)
+            possibleCell = ((GameCell) pirate.getCell()).getSegment().findForwardCell(pirate.getCell(), symbol, false);
 
-        if(possibleCell != null && possibleCell.isFurther(pirate.getCell()))
+        if(possibleCell == null)
+            possibleCell = segments[(((GameCell) pirate.getCell()).getSegment().getIndex() + 1)].findForwardCell(pirate.getCell(), symbol, true);
+
+
+        if(possibleCell != null)
             return possibleCell;
         else
             return BoatCell.getInstance();
+    }
+
+    public Cell getBackwardPossibleCell(Pirate pirate, int segmentIndex){
+        pirate.getCell().pirateLeft();
+        Cell possibleCell = null;
+        if(pirate.getCell() instanceof GameCell)
+            possibleCell = ((GameCell) pirate.getCell()).getSegment().findBackwardCell(pirate.getCell(), segmentIndex);
+
+
+        if(possibleCell == null)
+            possibleCell = getBackwardPossibleCell(pirate, segmentIndex - 1);
+
+        if(possibleCell != null)
+            return possibleCell;
+        else
+            return BeginCell.getInstance();
     }
 
     public BeginCell getBeginingCell() {

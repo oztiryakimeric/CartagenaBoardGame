@@ -37,4 +37,12 @@ public class Gui extends JPanel {
     public PlayerView getPlayerView() {
         return playerView;
     }
+
+    public void finish(){
+        int output = JOptionPane.showConfirmDialog(null, "The Winner is Player " + (game.getCurrentPlayer().getId() + 1) + ".", "CONGRATULAIONS!!!!", JOptionPane.PLAIN_MESSAGE, JOptionPane.INFORMATION_MESSAGE);
+
+        if(output == JOptionPane.OK_OPTION)
+            System.exit(0);
+
+    }
 }

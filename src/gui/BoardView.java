@@ -18,6 +18,7 @@ public class BoardView extends JPanel {
     private CellSelectListener listener;
     private List<HighlightedCell> highlightedCellList;
     private boolean enabled = true;
+    public PirateDrawer drawer;
 
     public BoardView(Game game) {
         this.game = game;
@@ -59,13 +60,14 @@ public class BoardView extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         new BoardDrawer(g, Color.orange, Color.black).draw();
-        new PirateDrawer(g).draw();
+        drawer = new PirateDrawer(g);
+        drawer.draw();
     }
 
     private Point getPosition(Cell cell){
         if(cell instanceof GameCell){
             GameCell c = (GameCell) cell;
-            int multiplier = cell.getIndex();
+            int multiplier = cell.getIndex() % game.getBoard().getSegments()[0].getCells().length;
             if(c.getSegment().getIndex() % 2 == 1)
                 multiplier = columnCount() - multiplier -1;
 
@@ -84,13 +86,22 @@ public class BoardView extends JPanel {
         return null;
     }
 
-    private GameCell getCell(Point position){
+    private Cell getCell(Point position) throws ArrayIndexOutOfBoundsException{
         int segmentIndex = position.y / cellHeight();
         int cellIndex = position.x / cellWidth() - 1;
-        if(segmentIndex % 2 == 1){
+        if(segmentIndex % 2 == 1 && segmentIndex > game.getBoard().getSegments().length ){
             cellIndex = columnCount() - cellIndex - 1;
         }
-        return game.getBoard().getSegments()[segmentIndex].getCells()[cellIndex];
+        if(cellIndex < 0 && segmentIndex == 0)
+            return BeginCell.getInstance();
+        else if(cellIndex < 0)
+            return null;
+        else if(segmentIndex > game.getBoard().getSegments().length - 1 && cellIndex == 5)
+            return BoatCell.getInstance();
+        else if (segmentIndex > game.getBoard().getSegments().length - 1)
+            return null;
+        else
+            return game.getBoard().getSegments()[segmentIndex].getCells()[cellIndex];
     }
 
     private int rowCount(){
@@ -126,6 +137,7 @@ public class BoardView extends JPanel {
             this.point = new Point(cellWidth(), 0);
             this.pathColor = pathColor;
             this.borderColor = borderColor;
+
         }
 
         public void draw(){
@@ -173,7 +185,7 @@ public class BoardView extends JPanel {
 
         private void drawBegining(){
             graphics.setColor(Color.white);
-
+            Point position = getPosition(game.getBoard().getBeginingCell());
             graphics.fillRect(0,0, cellWidth(), cellHeight());
 
             //draw borders
@@ -182,7 +194,7 @@ public class BoardView extends JPanel {
             graphics.fillRect(0,0, borderWidth(), cellHeight());
             graphics.fillRect(0, 0 + cellHeight() - borderHeight(), cellWidth(), borderHeight());
 
-            graphics.drawString("Begining cell", 40, 30);
+            graphics.drawString(alignStringsOfCells("Start Here!"), position.x + cellWidth() / 6, position.y + 30);
         }
 
         private void drawBoat(){
@@ -197,6 +209,8 @@ public class BoardView extends JPanel {
             graphics.fillRect(position.x, position.y, borderWidth(), cellHeight());
             graphics.fillRect(position.x, position.y + cellHeight() - borderHeight(), cellWidth(), borderHeight());
             graphics.fillRect(position.x + cellWidth() - borderWidth(), position.y, borderWidth(), cellHeight());
+
+            graphics.drawString(alignStringsOfCells("BOAT"), position.x + cellWidth() / 6, position.y + 30);
         }
 
         private void drawOuterBorders(){
@@ -245,23 +259,23 @@ public class BoardView extends JPanel {
         }
 
         private void drawCellsInfo(){
-            for(int i=0; i<game.getBoard().getSegments().length; i++){
+            for(int i = 0; i < game.getBoard().getSegments().length; i++){
                 Segment segment = game.getBoard().getSegments()[i];
-                for(int j=0; j<segment.getCells().length; j++){
+                for(int j = 0; j < segment.getCells().length; j++){
                     GameCell cell = segment.getCells()[j];
                     Point position = getPosition(cell);
-                    graphics.drawString(transfromSymbol(cell.getSymbol().toString()), position.x + cellWidth() / 6, position.y + 30);
+                    graphics.drawString(alignStringsOfCells(cell.getSymbol().toString()), position.x + cellWidth() / 6 - 5, position.y + 30);
                 }
             }
         }
 
-        private String transfromSymbol(String str){
+        private String alignStringsOfCells(String str){
             int length = str.length();
             String newStr = "";
-            for(int i=0; i<10-length/2; i++)
+            for(int i = 0; i < 10 - length / 2; i++)
                 newStr += " ";
             newStr += str;
-            for(int i=0; i<10-length/2; i++)
+            for(int i = 0; i < 10 - length / 2; i++)
                 newStr += " ";
             return newStr;
         }
@@ -279,7 +293,7 @@ public class BoardView extends JPanel {
         }
     }
 
-    private class PirateDrawer{
+    public class PirateDrawer{
         private static final double PAWN_RATIO = 5.0;
         private Graphics graphics;
 
@@ -291,7 +305,7 @@ public class BoardView extends JPanel {
             drawPlayers();
         }
 
-        private void drawPlayers(){
+        public void drawPlayers(){
             for(Player player: game.getPlayerList()){
                 drawPlayer(player);
             }
@@ -347,6 +361,10 @@ public class BoardView extends JPanel {
         private int marginHeight(){
             return pawnHeight() / 4;
         }
+    }
+
+    public PirateDrawer getPirateDrawer(){
+        return drawer;
     }
 }
 

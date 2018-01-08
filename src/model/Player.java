@@ -15,7 +15,7 @@ public class Player {
     public Player(int id) {
         this.id = id;
         setColor();
-        createPawns(6);
+        createPirates(6);
         deck = new ArrayList<>();
     }
 
@@ -34,19 +34,21 @@ public class Player {
         }
     }
 
-    private void createPawns(int count){
+    private void createPirates(int count){
         pirateList = new ArrayList<>(count);
 
-        for(int i=0; i<count; i++)
+        for(int i=0; i<count; i++) {
             pirateList.add(new Pirate());
+            pirateList.get(i).move(BeginCell.getInstance());
+        }
     }
 
     public boolean isWinner(){
-        int pawnInBoatCount = 0;
+        int pirateInBoatCount = 0;
         for(Pirate p: pirateList)
             if(p.getCell().equals(BoatCell.getInstance()))
-                pawnInBoatCount++;
-        return pawnInBoatCount == 6;
+                pirateInBoatCount++;
+        return pirateInBoatCount == pirateList.size();
     }
 
     public void addCard(Symbol card){
@@ -67,5 +69,14 @@ public class Player {
 
     public int getId() {
         return id;
+    }
+
+    public void killTheCard(Symbol symbol){
+        for(int i = 0; i < deck.size(); i++){
+            if(deck.get(i).equals(symbol)) {
+                deck.remove(i);
+                break;
+            }
+        }
     }
 }

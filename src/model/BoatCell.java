@@ -10,7 +10,7 @@ public class BoatCell extends Cell{
     }
 
     private BoatCell() {
-        super(38);
+        super(43000);
     }
 
     @Override

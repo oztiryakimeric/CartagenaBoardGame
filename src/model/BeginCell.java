@@ -10,7 +10,7 @@ public class BeginCell extends Cell{
     }
 
     private BeginCell() {
-        super(0);
+        super(-1);
     }
 
     @Override

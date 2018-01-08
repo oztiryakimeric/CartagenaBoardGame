@@ -34,27 +34,32 @@ public class Game {
 
             playerList.add(player);
         }
+        currentPlayer = playerList.get(0);
     }
 
-    public void move(Pirate pirate, Symbol symbol){
-        playRound(pirate, symbol);
-        boolean wantSecondRound = false;
+    public void move(Pirate pirate, Symbol symbol, String action){
+        killCard(symbol);
 
-        if(!wantSecondRound){
-            getCurrentPlayer().addCard(deck.getTopCard());
-            getCurrentPlayer().addCard(deck.getTopCard());
-        } else {
+        if(action.equals("forward"))
+            playForward(pirate, symbol);
+        else if(action.equals("backward"))
+            playBackward(pirate);
 
-            getCurrentPlayer().addCard(deck.getTopCard());
-        }
-
-        if(!isFinished()) {
-            switchToNextPlayer();
-        }
     }
 
-    private void playRound(Pirate pirate, Symbol symbol){
-        Cell destinationCell = board.getPossibleCell(pirate, symbol);
+    private void playForward(Pirate pirate, Symbol symbol){
+        Cell destinationCell = board.getForwardPossibleCell(pirate, symbol);
+        destinationCell.pirateCame();
+        pirate.move(destinationCell);
+    }
+
+    private void playBackward(Pirate pirate){
+        Cell destinationCell = board.getBackwardPossibleCell(pirate, pirate.getCell().getIndex() / deck.getDeck().size());
+
+        for(int i = 0; i < destinationCell.getPiratesOnThisCell(); i++){
+            currentPlayer.addCard(deck.getTopCard());
+        }
+        destinationCell.pirateCame();
         pirate.move(destinationCell);
     }
 
@@ -67,7 +72,7 @@ public class Game {
     }
 
     public boolean isFinished() {
-        return !currentPlayer.isWinner();
+        return currentPlayer.isWinner();
     }
 
     public Board getBoard() {
@@ -78,7 +83,9 @@ public class Game {
         return playerList;
     }
 
-
+    public void killCard(Symbol symbol){
+        getCurrentPlayer().killTheCard(symbol);
+    }
 
     @Override
     public String toString() {

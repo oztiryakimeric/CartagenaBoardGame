@@ -13,18 +13,15 @@ import java.util.Map;
 /**
  * Created by oztiryakimeric on 12.01.2018.
  */
-public class DeckComboBox extends JComboBox<DeckComboBox.DeckItem> {
+public class DeckComboBox extends JComboBox<DeckComboBox.ComboBoxItem> {
     private List<Symbol> symbolList;
     private CardSelectedListener cardSelectedListener;
 
     public DeckComboBox(List<Symbol> symbolList) {
         this.symbolList = symbolList;
-        this.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(cardSelectedListener != null && getSelectedItem() != null){
-                    cardSelectedListener.onCardSelected(((DeckItem) getSelectedItem()).getSymbol());
-                }
+        this.addActionListener(e -> {
+            if(cardSelectedListener != null && getSelectedIndex() > 0){
+                cardSelectedListener.onCardSelected(((ComboBoxItem) getSelectedItem()).getItem().getSymbol());
             }
         });
 
@@ -36,7 +33,6 @@ public class DeckComboBox extends JComboBox<DeckComboBox.DeckItem> {
     }
 
     private void populate(){
-
         HashMap<Symbol, Integer> cardMap = new HashMap<>();
 
         for(Symbol symbol: symbolList){
@@ -44,13 +40,19 @@ public class DeckComboBox extends JComboBox<DeckComboBox.DeckItem> {
             cardMap.put(symbol, count+1);
         }
 
+        if(cardMap.entrySet().size() == 0){
+            this.addItem(new ComboBoxItem("Empty"));
+            return;
+        }
+        this.addItem(new ComboBoxItem("Choose"));
+
         Iterator it = cardMap.entrySet().iterator();
 
         while(it.hasNext()){
             Map.Entry pair = (Map.Entry)it.next();
             Symbol symbol = (Symbol) pair.getKey();
             int count = (int) pair.getValue();
-            this.addItem(new DeckItem(symbol, count));
+            this.addItem(new ComboBoxItem(new DeckItem(symbol, count)));
             it.remove();
         }
     }
@@ -64,7 +66,30 @@ public class DeckComboBox extends JComboBox<DeckComboBox.DeckItem> {
         this.symbolList = deck;
     }
 
-    class DeckItem{
+    class ComboBoxItem{
+        private String text;
+        private DeckItem item;
+
+        public ComboBoxItem(String text) {
+            this.text = text;
+        }
+
+        public ComboBoxItem(DeckItem item) {
+            this.item = item;
+            text = item.toString();
+        }
+
+        public DeckItem getItem() {
+            return item;
+        }
+
+        @Override
+        public String toString() {
+            return text;
+        }
+    }
+
+    private class DeckItem{
         private Symbol symbol;
         private int count;
 

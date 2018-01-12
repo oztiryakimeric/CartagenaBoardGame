@@ -344,7 +344,7 @@ public class BoardView extends JPanel {
             int xPos = (p.getId() % 3) * (pawnWidth() + marginWidth()) + startingPosition.x;
             int yPos = ((p.getId() / 3) * (pawnHeight() + marginHeight())) + startingPosition.y;
 
-            graphics.setColor(p.getColor());
+            graphics.setColor(Util.idToColor(p.getId()));
             graphics.fillOval(xPos, yPos, pawnWidth(), pawnHeight());
 
             graphics.setColor(Color.black);

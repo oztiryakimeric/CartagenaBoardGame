@@ -1,46 +1,19 @@
 package model;
 
-import java.awt.*;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by oztiryakimeric on 9.12.2017.
  */
 public class Player {
     private int id;
-    private Color color;
-    private ArrayList<Pirate> pirateList;
-    private ArrayList<Symbol> deck;
+    private List<Pirate> pirateList;
+    private List<Symbol> deck;
 
-    public Player(int id) {
+    public Player(int id, List<Pirate> pirateList, List<Symbol> symbolList) {
         this.id = id;
-        setColor();
-        createPirates(6);
-        deck = new ArrayList<>();
-    }
-
-    private void setColor(){
-        switch(id){
-            case 0: color = Color.cyan;
-                break;
-            case 1: color = Color.MAGENTA;
-                break;
-            case 2: color = Color.red;
-                break;
-            case 3: color = Color.green;
-                break;
-            case 4: color = Color.pink;
-                break;
-        }
-    }
-
-    private void createPirates(int count){
-        pirateList = new ArrayList<>(count);
-
-        for(int i=0; i<count; i++) {
-            pirateList.add(new Pirate());
-            pirateList.get(i).move(BeginCell.getInstance());
-        }
+        this.pirateList = pirateList;
+        this.deck = symbolList;
     }
 
     public boolean isWinner(){
@@ -58,26 +31,6 @@ public class Player {
         return null;
     }
 
-    public void addCard(Symbol card){
-        deck.add(card);
-    }
-
-    public Color getColor(){
-        return color;
-    }
-
-    public ArrayList<Symbol> getDeck() {
-        return deck;
-    }
-
-    public ArrayList<Pirate> getPirateList() {
-        return pirateList;
-    }
-
-    public int getId() {
-        return id;
-    }
-
     public void discard(Symbol symbol){
         for(int i=0; i<deck.size(); i++)
             if(deck.get(i).equals(symbol)){
@@ -85,4 +38,32 @@ public class Player {
                 return;
             }
     }
+
+    public boolean hasValidMove(Board board){
+        if(deck.size() > 0) return true;
+
+        for(Pirate pirate: pirateList){
+            Cell possibleCell = board.findPossibleBackwardCell(pirate);
+            if(!possibleCell.equals(pirate.getCell()))
+                return true;
+        }
+        return false;
+    }
+
+    public void addCard(Symbol card){
+        deck.add(card);
+    }
+
+    public List<Symbol> getDeck() {
+        return deck;
+    }
+
+    public List<Pirate> getPirateList() {
+        return pirateList;
+    }
+
+    public int getId() {
+        return id;
+    }
+
 }

@@ -15,14 +15,22 @@ public class GameBuilder {
         return new Game(playerList, board, Deck.getInstance());
     }
 
-    private static List<Player> generatePlayerList(int count, Deck deck){
-        List<Player> players = new ArrayList<>(count);
-        for(int i = 0; i < count; i++){
-            Player player = new Player(i);
+    private static List<Player> generatePlayerList(int playerCount, Deck deck){
+        List<Player> players = new ArrayList<>(playerCount);
+        for(int i = 0; i < playerCount; i++){
+            List<Pirate> pirateList = new ArrayList<>(6);
+            for(int j=0; j<6; j++){
+                Pirate p = new Pirate();
+                p.move(BeginCell.getInstance());
+                pirateList.add(p);
+            }
 
-            for(int j = 0; j < 6; j++)
-                player.addCard(deck.getTopCard());
+            List<Symbol> symbolList = new ArrayList<>(6);
+            for(int j = 0; j < 6; j++){
+                symbolList.add(deck.getTopCard());
+            }
 
+            Player player = new Player(i, pirateList, symbolList);
             players.add(player);
         }
         return players;

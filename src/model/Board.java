@@ -1,7 +1,5 @@
 package model;
 
-import java.util.Arrays;
-
 /**
  * Created by oztiryakimeric on 9.12.2017.
  */
@@ -34,14 +32,22 @@ public class Board {
             return BoatCell.getInstance();
         }
 
-        GameCell possibleCell = segments[0].findPossibleForwardCell(currentCellIndex + 1, symbol);
-        if(possibleCell != null)
-            return possibleCell;
+        for(int j=currentCellIndex + 1; j<segments[currentSegmentIndex].getCells().length; j++){
+            GameCell possibleCell = segments[currentSegmentIndex].getCells()[j];
+
+            if(possibleCell.getSymbol().equals(symbol) && possibleCell.getPirateCount() == 0)
+                return possibleCell;
+
+        }
 
         for(int i=currentSegmentIndex + 1; i<segments.length; i++){
-            possibleCell = segments[i].findPossibleForwardCell(0, symbol);
-            if(possibleCell != null)
-                return possibleCell;
+            for(int j=0; j<segments[i].getCells().length; j++){
+                GameCell possibleCell = segments[i].getCells()[j];
+
+                if(possibleCell.getSymbol().equals(symbol) && possibleCell.getPirateCount() == 0)
+                    return possibleCell;
+
+            }
         }
 
         return BoatCell.getInstance();
@@ -64,14 +70,20 @@ public class Board {
             currentCellIndex = segments[0].getCells().length - 1;
         }
 
-        GameCell possibleCell = segments[0].findPossibleBackwardCell(currentCellIndex - 1);
-        if(possibleCell != null)
-            return possibleCell;
+        for(int j=currentCellIndex - 1; j>=0; j--){
+            GameCell possibleCell = segments[currentSegmentIndex].getCells()[j];
 
-        for(int i=currentSegmentIndex - 1; i>=0; i--) {
-            possibleCell = segments[i].findPossibleBackwardCell(0);
-            if (possibleCell != null)
+            if(possibleCell.getPirateCount() > 0 && possibleCell.getPirateCount() < 3)
                 return possibleCell;
+        }
+
+        for(int i=currentSegmentIndex - 1; i>=0; i--){
+            for(int j=segments[0].getCells().length-1; j>=0; j--){
+                GameCell possibleCell = segments[i].getCells()[j];
+
+                if(possibleCell.getPirateCount() > 0 && possibleCell.getPirateCount() < 3)
+                    return possibleCell;
+            }
         }
 
         return pirate.getCell();

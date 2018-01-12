@@ -48,6 +48,8 @@ public class Game {
 
     public void switchToNextPlayer(){
         currentPlayer = playerList.get((playerList.indexOf(currentPlayer) + 1) % playerList.size());
+
+
     }
 
     public boolean isFinished() {

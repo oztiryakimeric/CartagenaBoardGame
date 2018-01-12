@@ -1,6 +1,5 @@
 package gui;
 
-import model.Pirate;
 import model.Player;
 import model.Symbol;
 
@@ -41,7 +40,7 @@ public class GamePadView extends JPanel {
 
         container = new JPanel();
         container.setLayout(new GridLayout(5, 1));
-        container.setBackground(player.getColor());
+        container.setBackground(Util.idToColor(player.getId()));
 
         initializeSelectPirateRow();
         initializeChooseActionRow();
@@ -198,7 +197,7 @@ public class GamePadView extends JPanel {
 
     public void update(Player player){
         this.player = player;
-        container.setBackground(player.getColor());
+        container.setBackground(Util.idToColor(player.getId()));
         this.deckComboBox.setDeck(player.getDeck());
         updateDeckComboBox();
         turnHolderLabel.setText("Player " + (player.getId() + 1) + "'s turn");

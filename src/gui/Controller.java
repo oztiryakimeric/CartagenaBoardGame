@@ -79,7 +79,7 @@ public class Controller {
             if(action.equals("backward")){
                 Cell possibleCell = game.getBoard().findPossibleBackwardCell(selectedPirate);
                 if(possibleCell.equals(selectedCell)){
-                    showMessage("Oops", "You can't move that pirate. That is not valid.");
+                    showMessage("Oops", "You can't move that pirate backward. There is no any pirate behind that.");
                 }
                 else{
                     if(highlightedFutureLocation != null)
@@ -117,12 +117,9 @@ public class Controller {
             else if(selectedAction.equals("backward"))
                 game.playBackward(selectedPirate);
 
-            gui.getBoardView().repaint();
-
             gui.getBoardView().removeHighlights();
             gui.getBoardView().setEnabled(true);
 
-            gui.getGamePadView().initialStateWithSkip();
             gui.getGamePadView().enableDirectionRow(false);
 
             if(++turnCounter > 1){
@@ -137,7 +134,7 @@ public class Controller {
             }
 
             if(game.isFinished()){
-                gui.finish();
+                finishGame();
             }
         }
 
@@ -150,12 +147,27 @@ public class Controller {
         }
 
         private void update(){
+            int changeCount = 0;
+            while(!game.getCurrentPlayer().hasValidMove(game.getBoard())){
+                showMessage("There is no option...", "You do not have any option to play");
+                game.switchToNextPlayer();
+                if(changeCount == game.getPlayerList().size()){
+                    finishGame();
+                }
+            }
             gui.getGamePadView().update(game.getCurrentPlayer());
-
 
             gui.getBoardView().removeHighlights();
             gui.getBoardView().setEnabled(true);
             gui.getCardListView().update();
+        }
+
+        public void finishGame(){
+            int output = JOptionPane.showConfirmDialog(null, "The Winner is Player " + (game.getCurrentPlayer().getId() + 1) + ".", "CONGRATULAIONS!!!!", JOptionPane.PLAIN_MESSAGE, JOptionPane.INFORMATION_MESSAGE);
+
+            if(output == JOptionPane.OK_OPTION)
+                System.exit(0);
+
         }
     }
 }

@@ -36,7 +36,7 @@ public class CardListView extends JPanel{
         for(Player player: playerList){
             JPanel borderedPanel = new JPanel();
             borderedPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), player.getId() + 1 + ". Player's cards"));
-            borderedPanel.setBackground(player.getColor());
+            borderedPanel.setBackground(Util.idToColor(player.getId()));
 
             HashMap<Symbol, Integer> cardMap = new HashMap<>();
 

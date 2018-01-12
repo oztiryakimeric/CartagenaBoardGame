@@ -9,7 +9,7 @@ import model.Symbol;
  */
 public class Main {
     public static void main(String[] args){
-        Game game = GameBuilder.build(5, 6, Symbol.getSymbols());
+        Game game = GameBuilder.build(2, 6, Symbol.getSymbols());
 
         Gui gui = new Gui(game);
 

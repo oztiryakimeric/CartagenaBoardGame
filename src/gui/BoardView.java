@@ -58,6 +58,14 @@ public class BoardView extends JPanel {
         this.repaint();
     }
 
+    public void removeHighlight(Cell cell){
+        for(int i=highlightedCellList.size()-1; i>=0; i--)
+            if(highlightedCellList.get(i).equals(cell))
+                highlightedCellList.remove(i);
+
+        this.repaint();
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -368,6 +376,7 @@ public class BoardView extends JPanel {
             return pawnHeight() / 4;
         }
     }
+
     public interface CellSelectListener{
         void cellSelected(Cell cell);
     }
@@ -387,6 +396,11 @@ public class BoardView extends JPanel {
 
         public Color getColor() {
             return color;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            return this.cell.equals(obj);
         }
     }
 }

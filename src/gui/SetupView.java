@@ -43,10 +43,12 @@ public class SetupView extends JPanel {
             }
         });
     }
+
+    public interface StartButtonListener{
+        void startButtonClicked(int playerCount);
+    }
 }
 
 
-interface StartButtonListener{
-    void startButtonClicked(int playerCount);
-}
+
 

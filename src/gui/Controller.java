@@ -21,6 +21,7 @@ public class Controller {
     public Controller(Gui gui, Game game) {
         this.gui = gui;
         this.game = game;
+        turnCounter = 0;
 
         gui.getBoardView().addCellSelectListener(new BoardViewController());
         gui.getGamePadView().addInteractionListener(new PlayerViewController());
@@ -34,8 +35,6 @@ public class Controller {
         frame.setLayout(new BorderLayout());
         frame.add(gui, BorderLayout.CENTER);
         frame.setVisible(true);
-
-        turnCounter = 0;
     }
 
     private void showMessage(String title, String message){
@@ -72,13 +71,25 @@ public class Controller {
 
     private class PlayerViewController implements GamePadView.PlayerViewInteraction {
 
+        private Cell highlightedFutureLocation;
+
         @Override
         public void actionSelected(String action) {
             selectedAction = action;
             if(action.equals("backward")){
-                gui.getBoardView().setEnabled(true);
-                gui.getGamePadView().enablePlayRow(true);
-                gui.getGamePadView().enableCardRow(false);
+                Cell possibleCell = game.getBoard().findPossibleBackwardCell(selectedPirate);
+                if(possibleCell.equals(selectedCell)){
+                    showMessage("Oops", "You can't move that pirate. That is not valid.");
+                }
+                else{
+                    if(highlightedFutureLocation != null)
+                        gui.getBoardView().removeHighlight(highlightedFutureLocation);
+                    highlightedFutureLocation = possibleCell;
+                    gui.getBoardView().highlightCell(possibleCell, new Color(0, 200, 0, 100));
+                    gui.getBoardView().setEnabled(true);
+                    gui.getGamePadView().enablePlayRow(true);
+                    gui.getGamePadView().enableCardRow(false);
+                }
             }
             else if(action.equals("forward")){
                 gui.getGamePadView().enableCardRow(true);
@@ -88,6 +99,13 @@ public class Controller {
         @Override
         public void cardSelected(Symbol symbol) {
             selectedSymbol = symbol;
+
+            Cell possibleCell = game.getBoard().findPossibleForwardCell(selectedPirate, symbol);
+
+            if(highlightedFutureLocation != null)
+                gui.getBoardView().removeHighlight(highlightedFutureLocation);
+            highlightedFutureLocation = possibleCell;
+            gui.getBoardView().highlightCell(possibleCell, new Color(0, 200, 0, 100));
             gui.getGamePadView().enableDirectionRow(false);
             gui.getGamePadView().enablePlayRow(true);
         }

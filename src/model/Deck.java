@@ -34,6 +34,8 @@ public class Deck {
     }
 
     public Symbol getTopCard(){
+        if(deck.isEmpty())
+            initCards();
         return deck.pop();
     }
 

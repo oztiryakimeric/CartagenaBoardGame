@@ -16,18 +16,6 @@ public class Cell{
         return index;
     }
 
-    public boolean isFurther(Cell cell){
-        return this.index > cell.index;
-    }
-
-    public boolean isFewer(Cell cell){
-        return this.index < cell.index;
-    }
-
-    public boolean isOccupied(){
-        return pirateCount > 2;
-    }
-
     public void pirateCame(){
         pirateCount++;
     }

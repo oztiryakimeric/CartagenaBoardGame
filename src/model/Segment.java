@@ -1,5 +1,7 @@
 package model;
 
+import sun.jvm.hotspot.debugger.cdbg.Sym;
+
 import java.util.Arrays;
 
 /**
@@ -8,34 +10,23 @@ import java.util.Arrays;
 public class Segment {
     private int index;
     private GameCell[] cells;
-    private Segment next;
 
-    public Segment(int index, int length) {
+    public Segment(int index) {
         this.index = index;
-        cells = new GameCell[length];
     }
 
-    public Cell findBackwardCell(Cell pirateCell, int searchingSegment){
-        int index;
-
-        if (pirateCell instanceof BeginCell)
-            return BeginCell.getInstance();
-        else
-            index = pirateCell.getIndex() % cells.length;
-
-        while(index > -1) {
-            if (!cells[index].isOccupied() && cells[index].isFewer(pirateCell))
-                return cells[index];
-            index--;
-        }
-        if(searchingSegment == 0)
-            return BeginCell.getInstance();
-        else
-            return null;
+    public GameCell findPossibleForwardCell(int startingPoint, Symbol symbol){
+        for(int i=startingPoint; i<cells.length; i++)
+            if(cells[i].getSymbol().equals(symbol) && cells[i].getPirateCount() == 0)
+                return cells[i];
+        return null;
     }
 
-    public void setNext(Segment next) {
-        this.next = next;
+    public GameCell findPossibleBackwardCell(int startingPoint){
+        for(int i=startingPoint - 1; i>=0; i--)
+            if(cells[i].getPirateCount() > 0 && cells[i].getPirateCount() < 3)
+                return cells[i];
+        return null;
     }
 
     public GameCell[] getCells() {
@@ -48,10 +39,5 @@ public class Segment {
 
     public int getIndex() {
         return index;
-    }
-
-    @Override
-    public String toString() {
-        return "{(" + index + ") " + Arrays.toString(cells) + "} -> ";
     }
 }

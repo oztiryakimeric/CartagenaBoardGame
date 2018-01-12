@@ -1,10 +1,6 @@
 package model;
 
-import sun.jvm.hotspot.debugger.cdbg.Sym;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by oztiryakimeric on 9.12.2017.
@@ -14,56 +10,18 @@ public class Game {
     private Player currentPlayer;
     private Board board;
     private Deck deck;
-    private int numPlayers;
 
-    public Game(int numPlayers){
-        this.numPlayers = numPlayers;
-        playerList = new ArrayList<>();
-        board = Board.getInstance(6);
-        initDeck();
-        initPlayers();
-
-        //playRandomly(10);
-    }
-
-    private void playRandomly(int playCount){
-        Random r = new Random();
-        int turn = 0;
-        while(playCount != 0 && currentPlayer.getDeck().size() > 0){
-
-            Pirate p = currentPlayer.getPirateList().get(r.nextInt(currentPlayer.getPirateList().size()));
-            Symbol s = currentPlayer.getDeck().get(r.nextInt(currentPlayer.getDeck().size()));
-
-            playForward(p, s);
-
-            if(turn++ == 2)
-                switchToNextPlayer();
-
-            playCount--;
-        }
-    }
-
-    private void initDeck(){
-        deck = Deck.getInstance();
-    }
-
-    private void initPlayers(){
-        for(int i = 0; i < numPlayers; i++){
-            Player player = new Player(i);
-
-            for(int j = 0; j < 6; j++)
-                player.addCard(deck.getTopCard());
-
-            playerList.add(player);
-        }
-
+    public Game(List<Player> playerList, Board board, Deck deck){
+        this.playerList = playerList;
+        this.board = board;
+        this.deck = deck;
         currentPlayer = playerList.get(0);
     }
 
     public void playForward(Pirate pirate, Symbol symbol){
         currentPlayer.discard(symbol);
 
-        Cell destinationCell = board.getForwardPossibleCell(pirate, symbol);
+        Cell destinationCell = board.findPossibleForwardCell(pirate, symbol);
 
         pirate.getCell().pirateLeft();
         destinationCell.pirateCame();
@@ -72,8 +30,7 @@ public class Game {
     }
 
     public void playBackward(Pirate pirate){
-        Cell destinationCell = board.getBackwardPossibleCell(pirate);
-        System.out.println("Found cell Segment: " + ((GameCell) destinationCell).getSegment().getIndex() + " Cell: " + destinationCell.getIndex());
+        Cell destinationCell = board.findPossibleBackwardCell(pirate);
 
         for(int i = 0; i < destinationCell.getPirateCount(); i++){
             currentPlayer.addCard(deck.getTopCard());

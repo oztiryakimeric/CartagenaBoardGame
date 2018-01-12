@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by oztiryakimeric on 9.12.2017.
  */
-public class Game {
+public class Game implements IGame{
     private List<Player> playerList;
     private Player currentPlayer;
     private Board board;
@@ -18,6 +18,7 @@ public class Game {
         currentPlayer = playerList.get(0);
     }
 
+    @Override
     public void playForward(Pirate pirate, Symbol symbol){
         currentPlayer.discard(symbol);
 
@@ -29,6 +30,7 @@ public class Game {
         pirate.move(destinationCell);
     }
 
+    @Override
     public void playBackward(Pirate pirate){
         Cell destinationCell = board.findPossibleBackwardCell(pirate);
 
@@ -42,24 +44,27 @@ public class Game {
         pirate.move(destinationCell);
     }
 
+    @Override
     public Player getCurrentPlayer(){
         return currentPlayer;
     }
 
+    @Override
     public void switchToNextPlayer(){
         currentPlayer = playerList.get((playerList.indexOf(currentPlayer) + 1) % playerList.size());
-
-
     }
 
+    @Override
     public boolean isFinished() {
         return currentPlayer.isWinner();
     }
 
+    @Override
     public Board getBoard() {
         return board;
     }
 
+    @Override
     public List<Player> getPlayerList() {
         return playerList;
     }

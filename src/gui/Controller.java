@@ -10,7 +10,7 @@ import java.awt.*;
  */
 public class Controller {
     private Gui gui;
-    private Game game;
+    private IGame game;
 
     private Cell selectedCell;
     private String selectedAction;
@@ -18,7 +18,7 @@ public class Controller {
     private Pirate selectedPirate;
     int turnCounter;
 
-    public Controller(Gui gui, Game game) {
+    public Controller(Gui gui, IGame game) {
         this.gui = gui;
         this.game = game;
         turnCounter = 0;

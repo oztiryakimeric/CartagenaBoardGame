@@ -1,6 +1,7 @@
 package gui;
 
 import model.Game;
+import model.IGame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,13 +10,13 @@ import java.awt.*;
  * Created by oztiryakimeric on 12.12.2017.
  */
 public class Gui extends JPanel {
-    private Game game;
+    private IGame game;
 
     private BoardView boardView;
     private GamePadView gamePadView;
     private CardListView cardListView;
 
-    public Gui(Game game) {
+    public Gui(IGame game) {
         this.game = game;
         this.setLayout(new BorderLayout());
 

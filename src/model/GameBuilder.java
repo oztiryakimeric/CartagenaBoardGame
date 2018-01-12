@@ -7,7 +7,6 @@ import java.util.List;
  * Created by oztiryakimeric on 12.01.2018.
  */
 public class GameBuilder {
-
     public static Game build(int playerCount, int segmentCount, List<Symbol> symbolList){
         List<Player> playerList = generatePlayerList(playerCount, Deck.getInstance());
         Board board = BoardBuilder.build(segmentCount, symbolList);

@@ -14,13 +14,13 @@ import java.util.List;
  */
 public class BoardView extends JPanel {
 
-    private Game game;
+    private IGame game;
     private CellSelectListener listener;
     private List<HighlightedCell> highlightedCellList;
     private boolean enabled = true;
 
 
-    public BoardView(Game game) {
+    public BoardView(IGame game) {
         this.game = game;
         highlightedCellList = new ArrayList<>();
 

@@ -7,36 +7,36 @@ import java.util.List;
 /**
  * Created by oztiryakimeric on 9.12.2017.
  */
-public enum Symbol {
-    BOTTLE, KEYS, SWORD, SKULL, HAT, PISTOL;
-
+public class Symbol{
     public static List<Symbol> getSymbols(){
         List<Symbol> symbolList = new ArrayList<>();
-        symbolList.add(BOTTLE);
-        symbolList.add(KEYS);
-        symbolList.add(SWORD);
-        symbolList.add(SKULL);
-        symbolList.add(HAT);
-        symbolList.add(PISTOL);
+        symbolList.add(new Symbol("BOTTLE"));
+        symbolList.add(new Symbol("KEYS"));
+        symbolList.add(new Symbol("SWORD"));
+        symbolList.add(new Symbol("SKULL"));
+        symbolList.add(new Symbol("HAT"));
+        symbolList.add(new Symbol("PISTOL"));
         return symbolList;
     }
 
-    public String toString(){
-        switch (this){
-            case BOTTLE:
-                return "BOTTLE";
-            case KEYS:
-                return "KEYS";
-            case SWORD:
-                return "SWORD";
-            case SKULL:
-                return "SKULL";
-            case HAT:
-                return "HAT";
-            case PISTOL:
-                return "PISTOL";
-            default:
-                return "UNRECOGNIZED";
-        }
+    private String text;
+
+    public Symbol(String text) {
+        this.text = text;
+    }
+
+    @Override
+    public String toString() {
+        return text;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Symbol o = (Symbol) obj;
+        return this.text.equals(o.getText());
     }
 }

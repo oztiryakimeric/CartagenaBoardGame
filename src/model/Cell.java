@@ -5,11 +5,11 @@ package model;
  */
 public class Cell{
     private int index;
-    private int piratesOnThisCell;
+    private int pirateCount;
 
     public Cell(int index) {
         this.index = index;
-        piratesOnThisCell = 0;
+        pirateCount = 0;
     }
 
     public int getIndex() {
@@ -25,19 +25,19 @@ public class Cell{
     }
 
     public boolean isOccupied(){
-        return piratesOnThisCell > 2;
+        return pirateCount > 2;
     }
 
     public void pirateCame(){
-        piratesOnThisCell++;
+        pirateCount++;
     }
 
     public void pirateLeft(){
-        piratesOnThisCell--;
+        pirateCount--;
     }
 
-    public int getPiratesOnThisCell(){
-        return piratesOnThisCell;
+    public int getPirateCount(){
+        return pirateCount;
     }
 }
 

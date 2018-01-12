@@ -21,9 +21,9 @@ public class Player {
 
     private void setColor(){
         switch(id){
-            case 0: color = Color.blue;
+            case 0: color = Color.cyan;
                 break;
-            case 1: color = Color.yellow;
+            case 1: color = Color.MAGENTA;
                 break;
             case 2: color = Color.red;
                 break;
@@ -51,6 +51,13 @@ public class Player {
         return pirateInBoatCount == pirateList.size();
     }
 
+    public Pirate getPirateAt(Cell cell){
+        for(Pirate pirate: pirateList)
+            if(pirate.getCell().equals(cell))
+                return pirate;
+        return null;
+    }
+
     public void addCard(Symbol card){
         deck.add(card);
     }
@@ -71,12 +78,11 @@ public class Player {
         return id;
     }
 
-    public void killTheCard(Symbol symbol){
-        for(int i = 0; i < deck.size(); i++){
-            if(deck.get(i).equals(symbol)) {
+    public void discard(Symbol symbol){
+        for(int i=0; i<deck.size(); i++)
+            if(deck.get(i).equals(symbol)){
                 deck.remove(i);
-                break;
+                return;
             }
-        }
     }
 }

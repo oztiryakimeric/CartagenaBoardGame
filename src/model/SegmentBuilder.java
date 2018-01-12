@@ -15,7 +15,7 @@ public class SegmentBuilder {
 
         GameCell[] cells = new GameCell[symbols.size()];
         for(int i = 0; i < symbols.size(); i++)
-            cells[i] = new GameCell(segment, (index * symbols.size()) + i, symbols.get(i));
+            cells[i] = new GameCell(segment, i, symbols.get(i));
 
         segment.setCells(cells);
 

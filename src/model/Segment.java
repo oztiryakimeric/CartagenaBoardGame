@@ -8,29 +8,11 @@ import java.util.Arrays;
 public class Segment {
     private int index;
     private GameCell[] cells;
+    private Segment next;
 
     public Segment(int index, int length) {
         this.index = index;
         cells = new GameCell[length];
-    }
-
-    public Cell findForwardCell(Cell pirateCell, Symbol symbol, boolean successorSegment){
-        int index;
-        if(successorSegment)
-            index = 0;
-        else {
-            if (pirateCell instanceof BeginCell)
-                index = 0;
-            else
-                index = pirateCell.getIndex() % cells.length;
-        }
-
-        while(index < cells.length) {
-            if (cells[index].getSymbol().equals(symbol) && cells[index].isFurther(pirateCell))
-                return cells[index];
-            index++;
-        }
-        return null;
     }
 
     public Cell findBackwardCell(Cell pirateCell, int searchingSegment){
@@ -50,6 +32,10 @@ public class Segment {
             return BeginCell.getInstance();
         else
             return null;
+    }
+
+    public void setNext(Segment next) {
+        this.next = next;
     }
 
     public GameCell[] getCells() {

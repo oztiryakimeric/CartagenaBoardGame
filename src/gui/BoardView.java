@@ -18,7 +18,7 @@ public class BoardView extends JPanel {
     private CellSelectListener listener;
     private List<HighlightedCell> highlightedCellList;
     private boolean enabled = true;
-    public PirateDrawer drawer;
+
 
     public BoardView(Game game) {
         this.game = game;
@@ -32,8 +32,10 @@ public class BoardView extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
-                if(listener != null && isEnabled())
-                    listener.cellSelected(getCell(new Point(e.getX(), e.getY())));
+                Cell cell = getCell(new Point(e.getX(), e.getY()));
+                if(isEnabled() && listener != null && cell != null){
+                    listener.cellSelected(cell);
+                }
             }
         });
     }
@@ -60,8 +62,7 @@ public class BoardView extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         new BoardDrawer(g, Color.orange, Color.black).draw();
-        drawer = new PirateDrawer(g);
-        drawer.draw();
+        new PirateDrawer(g).draw();
     }
 
     private Point getPosition(Cell cell){
@@ -89,19 +90,22 @@ public class BoardView extends JPanel {
     private Cell getCell(Point position) throws ArrayIndexOutOfBoundsException{
         int segmentIndex = position.y / cellHeight();
         int cellIndex = position.x / cellWidth() - 1;
-        if(segmentIndex % 2 == 1 && segmentIndex > game.getBoard().getSegments().length ){
+        int realIndex = cellIndex;
+
+        if(segmentIndex % 2 == 1)
             cellIndex = columnCount() - cellIndex - 1;
-        }
-        if(cellIndex < 0 && segmentIndex == 0)
-            return BeginCell.getInstance();
-        else if(cellIndex < 0)
-            return null;
-        else if(segmentIndex > game.getBoard().getSegments().length - 1 && cellIndex == 5)
-            return BoatCell.getInstance();
-        else if (segmentIndex > game.getBoard().getSegments().length - 1)
-            return null;
-        else
+
+
+        if(realIndex > -1 && segmentIndex < rowCount())
             return game.getBoard().getSegments()[segmentIndex].getCells()[cellIndex];
+        else if(realIndex == -1 && segmentIndex == 0)
+            return game.getBoard().getBeginingCell();
+        else if((rowCount() % 2) == 0 && realIndex == 0 && segmentIndex == rowCount())
+            return game.getBoard().getBoatCell();
+        else if((rowCount() % 2) == 1 && realIndex == columnCount() - 1 && segmentIndex == rowCount())
+            return game.getBoard().getBoatCell();
+        else
+            return null;
     }
 
     private int rowCount(){
@@ -141,13 +145,12 @@ public class BoardView extends JPanel {
         }
 
         public void draw(){
-            drawPathColor();
-            drawHighlightedCells();
-            drawGrid();
             drawBegining();
             drawBoat();
+            drawPathColor();
+            drawGrid();
+            drawHighlightedCells();
             drawOuterBorders();
-            //drawTopSegment();
             drawMiddleSegments();
             drawCellsInfo();
         }
@@ -185,16 +188,7 @@ public class BoardView extends JPanel {
 
         private void drawBegining(){
             graphics.setColor(Color.white);
-            Point position = getPosition(game.getBoard().getBeginingCell());
             graphics.fillRect(0,0, cellWidth(), cellHeight());
-
-            //draw borders
-            graphics.setColor(Color.black);
-            graphics.fillRect(0,0, cellWidth(), borderHeight());
-            graphics.fillRect(0,0, borderWidth(), cellHeight());
-            graphics.fillRect(0, 0 + cellHeight() - borderHeight(), cellWidth(), borderHeight());
-
-            graphics.drawString(alignStringsOfCells("Start Here!"), position.x + cellWidth() / 6, position.y + 30);
         }
 
         private void drawBoat(){
@@ -203,14 +197,6 @@ public class BoardView extends JPanel {
 
             graphics.setColor(Color.white);
             graphics.fillRect(position.x, position.y, cellWidth(), cellHeight());
-
-            //draw borders
-            graphics.setColor(Color.black);
-            graphics.fillRect(position.x, position.y, borderWidth(), cellHeight());
-            graphics.fillRect(position.x, position.y + cellHeight() - borderHeight(), cellWidth(), borderHeight());
-            graphics.fillRect(position.x + cellWidth() - borderWidth(), position.y, borderWidth(), cellHeight());
-
-            graphics.drawString(alignStringsOfCells("BOAT"), position.x + cellWidth() / 6, position.y + 30);
         }
 
         private void drawOuterBorders(){
@@ -223,6 +209,19 @@ public class BoardView extends JPanel {
 
             //draw rigth border
             graphics.fillRect(getWidth() - borderWidth(), point.y, borderWidth(), cellHeight() * rowCount());
+
+            //begining cell
+            graphics.setColor(Color.black);
+            graphics.fillRect(0,0, cellWidth(), borderHeight());
+            graphics.fillRect(0,0, borderWidth(), cellHeight());
+            graphics.fillRect(0, 0 + cellHeight() - borderHeight(), cellWidth(), borderHeight());
+
+            //boat cell
+            Point position = getPosition(game.getBoard().getBoatCell());
+            graphics.setColor(Color.black);
+            graphics.fillRect(position.x, position.y, borderWidth(), cellHeight());
+            graphics.fillRect(position.x, position.y + cellHeight() - borderHeight(), cellWidth(), borderHeight());
+            graphics.fillRect(position.x + cellWidth() - borderWidth(), position.y, borderWidth(), cellHeight());
         }
 
         private void drawMiddleSegments(){
@@ -267,6 +266,13 @@ public class BoardView extends JPanel {
                     graphics.drawString(alignStringsOfCells(cell.getSymbol().toString()), position.x + cellWidth() / 6 - 5, position.y + 30);
                 }
             }
+
+            //begining
+            graphics.drawString(alignStringsOfCells("Start Here!"), 0 + cellWidth() / 6, 0 + 30);
+
+            //boat
+            Point position = getPosition(game.getBoard().getBoatCell());
+            graphics.drawString(alignStringsOfCells("BOAT"), position.x + cellWidth() / 6, position.y + 30);
         }
 
         private String alignStringsOfCells(String str){
@@ -293,7 +299,7 @@ public class BoardView extends JPanel {
         }
     }
 
-    public class PirateDrawer{
+    private class PirateDrawer{
         private static final double PAWN_RATIO = 5.0;
         private Graphics graphics;
 
@@ -362,32 +368,29 @@ public class BoardView extends JPanel {
             return pawnHeight() / 4;
         }
     }
+    public interface CellSelectListener{
+        void cellSelected(Cell cell);
+    }
 
-    public PirateDrawer getPirateDrawer(){
-        return drawer;
+    public class HighlightedCell{
+        private Cell cell;
+        private Color color;
+
+        public HighlightedCell(Cell cell, Color color) {
+            this.cell = cell;
+            this.color = color;
+        }
+
+        public Cell getCell() {
+            return cell;
+        }
+
+        public Color getColor() {
+            return color;
+        }
     }
 }
 
-interface CellSelectListener{
-    void cellSelected(Cell cell);
-}
 
-class HighlightedCell{
-    private Cell cell;
-    private Color color;
-
-    public HighlightedCell(Cell cell, Color color) {
-        this.cell = cell;
-        this.color = color;
-    }
-
-    public Cell getCell() {
-        return cell;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-}
 
 

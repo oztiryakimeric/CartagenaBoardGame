@@ -23,13 +23,13 @@ public class Controller {
         this.game = game;
 
         gui.getBoardView().addCellSelectListener(new BoardViewController());
-        gui.getPlayerView().addInteractionListener(new PlayerViewController());
+        gui.getGamePadView().addInteractionListener(new PlayerViewController());
     }
 
     public void start(){
         JFrame frame = new JFrame("Cartagena");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 800);
+        frame.setSize(1250, 800);
         frame.setMinimumSize(new Dimension(1000, 800));
         frame.setLayout(new BorderLayout());
         frame.add(gui, BorderLayout.CENTER);
@@ -38,92 +38,85 @@ public class Controller {
         turnCounter = 0;
     }
 
-    private class BoardViewController implements CellSelectListener{
+    private void showMessage(String title, String message){
+        JOptionPane.showConfirmDialog(null, message, title, JOptionPane.PLAIN_MESSAGE, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private class BoardViewController implements BoardView.CellSelectListener {
         @Override
         public void cellSelected(Cell cell) {
             selectedCell = cell;
-            selectedPirate = null;
+            selectedPirate = game.getCurrentPlayer().getPirateAt(cell);
 
-            if(selectedCell != null){
-                gui.getBoardView().highlightCell(cell, Color.green);
+            gui.getBoardView().removeHighlights();
+            gui.getBoardView().highlightCell(cell, Color.gray);
+
+            if(selectedPirate == null){
+                showMessage("Wrong Cell", "You have no pirate here select again.");
+                gui.getBoardView().removeHighlights();
                 gui.getBoardView().setEnabled(true);
+                return;
             }
-
-            for(int i = 0; i < game.getCurrentPlayer().getPirateList().size(); i++) {
-                if (game.getCurrentPlayer().getPirateList().get(i).getCell().equals(cell)){
-                    selectedPirate = game.getCurrentPlayer().getPirateList().get(i);
-                    break;
-                }
-            }
-            
-            if(selectedCell == BoatCell.getInstance()){
-                JOptionPane.showConfirmDialog(null, "Your pirates are drinking rum in their boat. Don't disturb them to move somewhere else...", "Wrong Cell", JOptionPane.PLAIN_MESSAGE, JOptionPane.INFORMATION_MESSAGE);
-                selectedCell = null;
-                gui.getPlayerView().setEnabledActionRow(false);
-            } else if(selectedCell == BeginCell.getInstance()){
-                gui.getPlayerView().setEnabledCardRow(true);
-                gui.getPlayerView().setEnabledActionRow(false);
+            else if(selectedCell instanceof BeginCell){
+                gui.getGamePadView().enableCardRow(true);
+                gui.getGamePadView().enableDirectionRow(false);
+                gui.getGamePadView().setDirectionToForward();
                 selectedAction = "forward";
-            } else if(selectedCell == null){
-                JOptionPane.showConfirmDialog(null, "Don't try to push me to throwing NullPointer again. There is no way to go there as you can see.", "There is no cell", JOptionPane.PLAIN_MESSAGE, JOptionPane.INFORMATION_MESSAGE);
-                gui.getPlayerView().setEnabledActionRow(false);
-            } else {
-                if(selectedPirate == null){
-                    JOptionPane.showConfirmDialog(null, "You have no pirate here select again.", "Wrong Cell", JOptionPane.PLAIN_MESSAGE, JOptionPane.INFORMATION_MESSAGE);
-                    gui.getBoardView().removeHighlights();
-                    selectedCell = null;
-                }
-                else {
-                    gui.getPlayerView().pirateSelected(selectedPirate);
-                    gui.getPlayerView().setEnabledActionRow(true);
-                }
+            }
+            else {
+                gui.getGamePadView().pirateSelected();
+                gui.getGamePadView().enableDirectionRow(true);
             }
         }
     }
 
-    private class PlayerViewController implements PlayerViewInteraction{
+    private class PlayerViewController implements GamePadView.PlayerViewInteraction {
 
         @Override
         public void actionSelected(String action) {
             selectedAction = action;
             if(action.equals("backward")){
-                gui.getPlayerView().setEnabledActionRow(true);
-                gui.getPlayerView().setEnabledPlayRow(true);
-                gui.getPlayerView().setEnabledCardRow(false);
+                gui.getBoardView().setEnabled(true);
+                gui.getGamePadView().enablePlayRow(true);
+                gui.getGamePadView().enableCardRow(false);
             }
             else if(action.equals("forward")){
-                gui.getPlayerView().setEnabledActionRow(true);
-                gui.getPlayerView().setEnabledCardRow(true);
+                gui.getGamePadView().enableCardRow(true);
             }
         }
 
         @Override
         public void cardSelected(Symbol symbol) {
             selectedSymbol = symbol;
-            gui.getPlayerView().setEnabledCardRow(true);
-            gui.getPlayerView().setEnabledPlayRow(true);
+            gui.getGamePadView().enableDirectionRow(false);
+            gui.getGamePadView().enablePlayRow(true);
         }
 
         @Override
         public void playClicked() {
-            game.move(selectedPirate, selectedSymbol, selectedAction);
-            gui.getBoardView().getPirateDrawer().drawPlayers();
+            if(selectedAction.equals("forward"))
+                game.playForward(selectedPirate, selectedSymbol);
+            else if(selectedAction.equals("backward"))
+                game.playBackward(selectedPirate);
+
+            gui.getBoardView().repaint();
 
             gui.getBoardView().removeHighlights();
             gui.getBoardView().setEnabled(true);
 
-            gui.getPlayerView().initialStateWithSkip();
-            gui.getPlayerView().setEnabledActionRow(false);
+            gui.getGamePadView().initialStateWithSkip();
+            gui.getGamePadView().enableDirectionRow(false);
 
-            turnCounter++;
-
-            if(turnCounter > 1){
+            if(++turnCounter > 1){
                 game.switchToNextPlayer();
                 turnCounter = 0;
-                gui.getPlayerView().initialState();
+                update();
+                gui.getGamePadView().initialState();
             }
-
-            updateViews();
+            else{
+                update();
+                gui.getGamePadView().initialStateWithSkip();
+            }
 
             if(game.isFinished()){
                 gui.finish();
@@ -134,14 +127,17 @@ public class Controller {
         public void skipClicked() {
             game.switchToNextPlayer();
             turnCounter = 0;
-            gui.getPlayerView().initialState();
-            updateViews();
+            update();
+            gui.getGamePadView().initialState();
         }
 
-        private void updateViews(){
-            gui.getPlayerView().setCurrentPlayer(game.getCurrentPlayer());
-            gui.getPlayerView().updateDeckComboBox();
-            gui.getPlayerView().updateTurn();
+        private void update(){
+            gui.getGamePadView().update(game.getCurrentPlayer());
+
+
+            gui.getBoardView().removeHighlights();
+            gui.getBoardView().setEnabled(true);
+            gui.getCardListView().update();
         }
     }
 }

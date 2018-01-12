@@ -1,7 +1,10 @@
 package model;
 
+import sun.jvm.hotspot.debugger.cdbg.Sym;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by oztiryakimeric on 9.12.2017.
@@ -16,9 +19,28 @@ public class Game {
     public Game(int numPlayers){
         this.numPlayers = numPlayers;
         playerList = new ArrayList<>();
-        board = Board.getInstance(7);
+        board = Board.getInstance(6);
         initDeck();
         initPlayers();
+
+        //playRandomly(10);
+    }
+
+    private void playRandomly(int playCount){
+        Random r = new Random();
+        int turn = 0;
+        while(playCount != 0 && currentPlayer.getDeck().size() > 0){
+
+            Pirate p = currentPlayer.getPirateList().get(r.nextInt(currentPlayer.getPirateList().size()));
+            Symbol s = currentPlayer.getDeck().get(r.nextInt(currentPlayer.getDeck().size()));
+
+            playForward(p, s);
+
+            if(turn++ == 2)
+                switchToNextPlayer();
+
+            playCount--;
+        }
     }
 
     private void initDeck(){
@@ -34,32 +56,32 @@ public class Game {
 
             playerList.add(player);
         }
+
         currentPlayer = playerList.get(0);
     }
 
-    public void move(Pirate pirate, Symbol symbol, String action){
-        killCard(symbol);
+    public void playForward(Pirate pirate, Symbol symbol){
+        currentPlayer.discard(symbol);
 
-        if(action.equals("forward"))
-            playForward(pirate, symbol);
-        else if(action.equals("backward"))
-            playBackward(pirate);
-
-    }
-
-    private void playForward(Pirate pirate, Symbol symbol){
         Cell destinationCell = board.getForwardPossibleCell(pirate, symbol);
+
+        pirate.getCell().pirateLeft();
         destinationCell.pirateCame();
+
         pirate.move(destinationCell);
     }
 
-    private void playBackward(Pirate pirate){
-        Cell destinationCell = board.getBackwardPossibleCell(pirate, pirate.getCell().getIndex() / deck.getDeck().size());
+    public void playBackward(Pirate pirate){
+        Cell destinationCell = board.getBackwardPossibleCell(pirate);
+        System.out.println("Found cell Segment: " + ((GameCell) destinationCell).getSegment().getIndex() + " Cell: " + destinationCell.getIndex());
 
-        for(int i = 0; i < destinationCell.getPiratesOnThisCell(); i++){
+        for(int i = 0; i < destinationCell.getPirateCount(); i++){
             currentPlayer.addCard(deck.getTopCard());
         }
+
+        pirate.getCell().pirateLeft();
         destinationCell.pirateCame();
+
         pirate.move(destinationCell);
     }
 
@@ -81,16 +103,5 @@ public class Game {
 
     public List<Player> getPlayerList() {
         return playerList;
-    }
-
-    public void killCard(Symbol symbol){
-        getCurrentPlayer().killTheCard(symbol);
-    }
-
-    @Override
-    public String toString() {
-        return "model.Game{" +
-                "board=" + board +
-                '}';
     }
 }

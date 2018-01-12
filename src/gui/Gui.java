@@ -1,6 +1,5 @@
 package gui;
 
-import model.Cell;
 import model.Game;
 
 import javax.swing.*;
@@ -13,7 +12,8 @@ public class Gui extends JPanel {
     private Game game;
 
     private BoardView boardView;
-    private PlayerView playerView;
+    private GamePadView gamePadView;
+    private CardListView cardListView;
 
     public Gui(Game game) {
         this.game = game;
@@ -22,8 +22,15 @@ public class Gui extends JPanel {
         boardView = new BoardView(game);
         add(boardView, BorderLayout.CENTER);
 
-        playerView = new PlayerView(game.getCurrentPlayer());
-        add(playerView, BorderLayout.EAST);
+        JPanel rightContainer = new JPanel();
+        rightContainer.setLayout(new BorderLayout());
+        add(rightContainer, BorderLayout.EAST);
+
+        gamePadView = new GamePadView(game.getCurrentPlayer());
+        cardListView = new CardListView(game.getPlayerList());
+
+        rightContainer.add(gamePadView, BorderLayout.NORTH);
+        rightContainer.add(cardListView, BorderLayout.CENTER);
     }
 
     public Game getGame() {
@@ -34,8 +41,8 @@ public class Gui extends JPanel {
         return boardView;
     }
 
-    public PlayerView getPlayerView() {
-        return playerView;
+    public GamePadView getGamePadView() {
+        return gamePadView;
     }
 
     public void finish(){
@@ -44,5 +51,9 @@ public class Gui extends JPanel {
         if(output == JOptionPane.OK_OPTION)
             System.exit(0);
 
+    }
+
+    public CardListView getCardListView() {
+        return cardListView;
     }
 }

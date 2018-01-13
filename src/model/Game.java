@@ -1,5 +1,7 @@
 package model;
 
+import gui.game.GameController;
+
 import java.util.List;
 
 /**
@@ -28,9 +30,14 @@ public class Game implements IGame{
     }
 
     @Override
+    public void setController(GameController controller) {
+
+    }
+
+    @Override
     public void playForward(Pirate pirate, Symbol symbol){
         currentPlayer.discard(symbol);
-
+        pirate = findRealPirateObject(pirate);
         Cell destinationCell = board.findPossibleForwardCell(pirate, symbol);
 
         pirate.getCell().pirateLeft();
@@ -41,6 +48,7 @@ public class Game implements IGame{
 
     @Override
     public void playBackward(Pirate pirate){
+        pirate = findRealPirateObject(pirate);
         Cell destinationCell = board.findPossibleBackwardCell(pirate);
 
         for(int i = 0; i < destinationCell.getPirateCount(); i++){
@@ -76,5 +84,15 @@ public class Game implements IGame{
     @Override
     public List<Player> getPlayerList() {
         return playerList;
+    }
+
+    private Pirate findRealPirateObject(Pirate p){
+        for(Player player: playerList){
+            for(Pirate pirate: player.getPirateList()){
+                if(pirate.equals(p))
+                    return pirate;
+            }
+        }
+        return null;
     }
 }

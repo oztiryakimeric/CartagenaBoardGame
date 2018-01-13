@@ -18,19 +18,17 @@ public class GameBuilder {
         return game;
     }
 
-    public static Game buildMulti(int playerCount, int segmentCount, List<Symbol> symbolList){
-        List<Player> playerList = generatePlayerList(playerCount, Deck.getInstance(symbolList));
-        Board board = BoardBuilder.build(segmentCount, symbolList);
-
+    public static Game buildMulti(){
         return new Game();
     }
 
     public static List<Player> generatePlayerList(int playerCount, Deck deck){
         List<Player> players = new ArrayList<>(playerCount);
+        int pirateCounter = 0;
         for(int i = 0; i < playerCount; i++){
             List<Pirate> pirateList = new ArrayList<>(6);
             for(int j=0; j<6; j++){
-                Pirate p = new Pirate();
+                Pirate p = new Pirate(pirateCounter++);
                 p.move(BeginCell.getInstance());
                 pirateList.add(p);
             }
@@ -40,7 +38,7 @@ public class GameBuilder {
                 symbolList.add(deck.getTopCard());
             }
 
-            Player player = new Player(pirateList, symbolList);
+            Player player = new Player(i, pirateList, symbolList);
             players.add(player);
         }
         return players;

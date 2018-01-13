@@ -39,23 +39,9 @@ public class Server {
     }
 
     private void listenCommands(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(true){
-                    for(Connection connection: connectionList){
-                        try {
-                            Command command = (Command) connection.getObjectInputStream().readObject();
-                            broadcast(command);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (ClassNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-        }).start();
+        for(Connection connection: connectionList){
+            new Thread(new ListenCommandTask(connection)).start();;
+        }
     }
 
     public void broadcast(Command command) throws IOException {
@@ -68,4 +54,37 @@ public class Server {
         connectionList.get(playerId).getObjectOutputStream().writeObject(command);
     }
 
+    private class ListenCommandTask implements Runnable{
+        private Connection connection;
+
+        public ListenCommandTask(Connection connection) {
+            this.connection = connection;
+        }
+
+        @Override
+        public void run() {
+            try {
+                while(true){
+                    Command command = (Command) connection.getObjectInputStream().readObject();
+                    System.out.println("Server received some command from " + command.getSenderId() + " broadcasting to others " + command.getClass().toString());
+                    broadcast(command);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("IO Exception on server");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+                System.out.println("Class Not Found Exception on server");
+            }
+        }
+    }
 }
+
+
+
+
+
+
+
+
+

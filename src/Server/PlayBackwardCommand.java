@@ -2,23 +2,23 @@ package Server;
 
 import model.MultiplayerGame;
 import model.Pirate;
-import model.Symbol;
 
-public class PlayForwardCommand implements Command{
+/**
+ * Created by oztiryakimeric on 13.01.2018.
+ */
+public class PlayBackwardCommand implements Command{
 
     private int sender;
     private Pirate pirate;
-    private Symbol symbol;
 
-    public PlayForwardCommand(int sender, Pirate pirate, Symbol symbol) {
+    public PlayBackwardCommand(int sender, Pirate pirate) {
         this.sender = sender;
         this.pirate = pirate;
-        this.symbol = symbol;
     }
 
     @Override
     public void executeOn(MultiplayerGame game) {
-        game.playForwardWithBroadcast(pirate, symbol, false);
+        game.playBackwardWithBroadcast(pirate, false);
     }
 
     @Override

@@ -11,13 +11,5 @@ public class Main {
         SetupView setupView = new SetupView();
         SetupController controller = new SetupController(setupView);
         controller.start();
-
-        /*IGame game = GameBuilder.buildSingle(2, 6, Symbol.getSymbols());
-
-        game = new MultiplayerGame(game);
-        GameView gui = new GameView(game);
-
-        GameController controller = new GameController(gui, game);
-        controller.start();*/
     }
 }

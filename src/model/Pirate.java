@@ -8,20 +8,29 @@ import java.io.Serializable;
 
 public class Pirate  implements Serializable {
     private int id;
-    private static int idCounter = 0;
 
     private Cell cell;
 
-    public Pirate() {
+    public Pirate(int id) {
+        this.id = id;
         cell = BeginCell.getInstance();
     }
 
     public void move(Cell cell){
-        this.id = idCounter++;
+
         this.cell = cell;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public Cell getCell() {
         return cell;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.id == ((Pirate) obj).getId();
     }
 }

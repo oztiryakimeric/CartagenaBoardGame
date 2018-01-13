@@ -15,19 +15,22 @@ public class SetupView extends JPanel{
     private JSpinner segmentCountSpinner;
     private JComboBox<String> symbolListComboBox;
     private JButton addSymbolButton;
-    private JButton startGameButton;
+    private JButton singleButton;
+    private JButton multiButton;
+    private JLabel messageLabel;
 
     public SetupView()  {
         this.setLayout(new BorderLayout());
 
         container = new JPanel();
-        container.setLayout(new GridLayout(4, 1));
+        container.setLayout(new GridLayout(5, 1));
         add(container, BorderLayout.NORTH);
 
         initializePlayerCountRow();
         initializeSegmentCountRow();
         initializeSymbolListRow();
         initializeStartGameRow();
+        initializeMessageRow();
     }
 
     private void initializePlayerCountRow(){
@@ -70,8 +73,21 @@ public class SetupView extends JPanel{
     }
 
     private void initializeStartGameRow(){
-        startGameButton = new JButton("Start");
-        container.add(startGameButton);
+        JPanel borderedPanel = new JPanel();
+        borderedPanel.setLayout(new GridLayout(1,2));
+        borderedPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Start Game"));
+        container.add(borderedPanel);
+
+        singleButton = new JButton("Single");
+        multiButton = new JButton("Multi");
+
+        borderedPanel.add(singleButton);
+        borderedPanel.add(multiButton);
+    }
+
+    private void initializeMessageRow(){
+        messageLabel = new JLabel();
+        container.add(messageLabel);
     }
 
     public JComboBox<String> getPlayerCountComboBox() {
@@ -90,8 +106,16 @@ public class SetupView extends JPanel{
         return addSymbolButton;
     }
 
-    public JButton getStartGameButton() {
-        return startGameButton;
+    public JButton getSingleButton() {
+        return singleButton;
+    }
+
+    public JButton getMultiButton() {
+        return multiButton;
+    }
+
+    public void setMessage(String message){
+        messageLabel.setText(message);
     }
 }
 

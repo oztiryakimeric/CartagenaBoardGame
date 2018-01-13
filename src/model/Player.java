@@ -8,12 +8,11 @@ import java.util.List;
  */
 public class Player implements Serializable {
     private int id;
-    private static int idCounter = 0;
     private List<Pirate> pirateList;
     private List<Symbol> deck;
 
-    public Player(List<Pirate> pirateList, List<Symbol> symbolList) {
-        this.id = idCounter++;
+    public Player(int id, List<Pirate> pirateList, List<Symbol> symbolList) {
+        this.id = id;
         this.pirateList = pirateList;
         this.deck = symbolList;
     }

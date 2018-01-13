@@ -1,7 +1,5 @@
 package model;
 
-import java.io.Serializable;
-
 public class BeginCell extends Cell{
     private static BeginCell instance;
 

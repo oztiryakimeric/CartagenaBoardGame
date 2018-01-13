@@ -192,6 +192,16 @@ public class GamePadView extends JPanel {
         skipButton.setEnabled(false);
     }
 
+    public void disableCompletly(){
+        Dimension size = getPreferredSize();
+        this.container.setVisible(false);
+        this.setPreferredSize(size);
+    }
+
+    public void enableCompletly(){
+        this.container.setVisible(true);
+    }
+
     public void pirateSelected(){
         selectPirateLabel.setText(PIRATE_SELECTED_MESSAGE);
     }

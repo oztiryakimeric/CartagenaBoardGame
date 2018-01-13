@@ -18,13 +18,30 @@ public class GameController {
     private Pirate selectedPirate;
     int turnCounter;
 
+    GamePadController gamePadController;
+
     public GameController(GameView gui, IGame game) {
         this.gui = gui;
         this.game = game;
         turnCounter = 0;
 
+        gamePadController = new GamePadController();
         gui.getBoardView().addCellSelectListener(new BoardViewController());
-        gui.getGamePadView().addInteractionListener(new PlayerViewController());
+        gui.getGamePadView().addInteractionListener(gamePadController);
+    }
+
+    public void update(){
+        gamePadController.update();
+    }
+
+    public void disable(){
+        gui.getGamePadView().disableCompletly();
+        gui.getBoardView().setEnabled(false);
+    }
+
+    public void enable(){
+        gui.getGamePadView().enableCompletly();
+        gui.getBoardView().setEnabled(true);
     }
 
     public void start(){
@@ -69,7 +86,7 @@ public class GameController {
         }
     }
 
-    private class PlayerViewController implements GamePadView.PlayerViewInteraction {
+    private class GamePadController implements GamePadView.PlayerViewInteraction {
 
         private Cell highlightedFutureLocation;
 
@@ -146,7 +163,7 @@ public class GameController {
             gui.getGamePadView().initialState();
         }
 
-        private void update(){
+        public void update(){
             int changeCount = 0;
             while(!game.getCurrentPlayer().hasValidMove(game.getBoard())){
                 showMessage("There is no option...", "You do not have any option to play");
@@ -167,7 +184,6 @@ public class GameController {
 
             if(output == JOptionPane.OK_OPTION)
                 System.exit(0);
-
         }
     }
 }

@@ -1,7 +1,5 @@
 package model;
 
-import java.io.Serializable;
-
 public class BoatCell extends Cell{
     private static BoatCell instance;
 

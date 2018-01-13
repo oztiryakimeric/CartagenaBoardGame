@@ -11,11 +11,20 @@ public class Game implements IGame{
     private Board board;
     private Deck deck;
 
-    public Game(List<Player> playerList, Board board, Deck deck){
-        this.playerList = playerList;
+    @Override
+    public void setBoard(Board board){
         this.board = board;
+    }
+
+    @Override
+    public void setPlayerList(List<Player> playerList){
+        this.playerList = playerList;
+        this.currentPlayer = playerList.get(0);
+    }
+
+    @Override
+    public void setDeck(Deck deck){
         this.deck = deck;
-        currentPlayer = playerList.get(0);
     }
 
     @Override

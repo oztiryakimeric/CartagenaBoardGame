@@ -1,9 +1,11 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * Created by oztiryakimeric on 9.12.2017.
  */
-public class Segment {
+public class Segment implements Serializable {
     private int index;
     private GameCell[] cells;
 

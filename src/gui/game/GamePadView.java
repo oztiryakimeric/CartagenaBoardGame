@@ -1,5 +1,6 @@
-package gui;
+package gui.game;
 
+import gui.Util;
 import model.Player;
 import model.Symbol;
 

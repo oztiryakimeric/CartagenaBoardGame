@@ -1,17 +1,19 @@
 package model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by oztiryakimeric on 9.12.2017.
  */
-public class Player {
+public class Player implements Serializable {
     private int id;
+    private static int idCounter = 0;
     private List<Pirate> pirateList;
     private List<Symbol> deck;
 
-    public Player(int id, List<Pirate> pirateList, List<Symbol> symbolList) {
-        this.id = id;
+    public Player(List<Pirate> pirateList, List<Symbol> symbolList) {
+        this.id = idCounter++;
         this.pirateList = pirateList;
         this.deck = symbolList;
     }

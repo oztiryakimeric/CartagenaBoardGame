@@ -1,12 +1,14 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by oztiryakimeric on 9.12.2017.
  */
-public class Symbol{
+public class Symbol implements Serializable {
+
     public static List<Symbol> getSymbols(){
         List<Symbol> symbolList = new ArrayList<>();
         symbolList.add(new Symbol("BOTTLE"));

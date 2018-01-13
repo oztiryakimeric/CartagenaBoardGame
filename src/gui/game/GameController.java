@@ -1,4 +1,4 @@
-package gui;
+package gui.game;
 
 import model.*;
 
@@ -8,8 +8,8 @@ import java.awt.*;
 /**
  * Created by oztiryakimeric on 12.12.2017.
  */
-public class Controller {
-    private Gui gui;
+public class GameController {
+    private GameView gui;
     private IGame game;
 
     private Cell selectedCell;
@@ -18,7 +18,7 @@ public class Controller {
     private Pirate selectedPirate;
     int turnCounter;
 
-    public Controller(Gui gui, IGame game) {
+    public GameController(GameView gui, IGame game) {
         this.gui = gui;
         this.game = game;
         turnCounter = 0;

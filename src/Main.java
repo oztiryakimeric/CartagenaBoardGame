@@ -1,5 +1,3 @@
-package gui;
-
 import gui.setup.SetupController;
 import gui.setup.SetupView;
 

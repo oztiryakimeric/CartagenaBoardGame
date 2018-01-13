@@ -31,7 +31,7 @@ public class Board  implements Serializable {
         }
 
         else if(pirate.getCell() instanceof BoatCell){
-            return BoatCell.getInstance();
+            return boatCell;
         }
 
         for(int j=currentCellIndex + 1; j<segments[currentSegmentIndex].getCells().length; j++){
@@ -60,7 +60,7 @@ public class Board  implements Serializable {
         int currentCellIndex = 0;
 
         if(pirate.getCell() instanceof BeginCell)
-            return BeginCell.getInstance();
+            return beginingCell;
 
         else if(pirate.getCell() instanceof GameCell){
             currentSegmentIndex = ((GameCell) pirate.getCell()).getSegment().getIndex();
